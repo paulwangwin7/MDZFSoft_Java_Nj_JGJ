@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver">
+		</property>
+		<property name="url"
+			value="jdbc:oracle:thin:@127.0.0.1:1521:orcl">
+		</property>
+		<property name="username" value="njmd"></property>
+		<property name="password" value="njmdpass"></property>
+	</bean>
+	
+	<!-- DAO -->
+	<bean id="adminDAO" class="com.manager.admin.dao.AdminDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="userDAO" class="com.manager.player.dao.UserDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="sysDAO" class="com.manager.admin.dao.SysDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="logDAO" class="com.manager.admin.dao.LogDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 20130109配置 -->
+	<!-- DAO配置 -->
+	<bean id="frameLogDAO" class="com.njmd.dao.FrameLogDAO"></bean>
+	<bean id="frameMenuDAO" class="com.njmd.dao.FrameMenuDAO"></bean>
+	<bean id="frameNoticeDAO" class="com.njmd.dao.FrameNoticeDAO"></bean>
+	<bean id="frameRemarkDAO" class="com.njmd.dao.FrameRemarkDAO"></bean>
+	<bean id="frameRoleDAO" class="com.njmd.dao.FrameRoleDAO"></bean>
+	<bean id="frameServerinfoDAO" class="com.njmd.dao.FrameServerinfoDAO"></bean>
+	<bean id="frameTreeDAO" class="com.njmd.dao.FrameTreeDAO"></bean>
+	<bean id="frameUploadDAO" class="com.njmd.dao.FrameUploadDAO"></bean>
+	<bean id="frameUrlDAO" class="com.njmd.dao.FrameUrlDAO"></bean>
+	<bean id="frameUserDAO" class="com.njmd.dao.FrameUserDAO"></bean>
+	<!-- BO配置 -->
+	<bean id="frameUserBO" class="com.njmd.bo.impl.FrameUserBOImpl">
+		<property name="frameUserDAO" ref="frameUserDAO"/>
+	</bean>
+	<bean id="frameRoleBO" class="com.njmd.bo.impl.FrameRoleBOImpl">
+		<property name="frameRoleDAO" ref="frameRoleDAO"/>
+	</bean>
+	<bean id="frameTreeBO" class="com.njmd.bo.impl.FrameTreeBOImpl">
+		<property name="frameTreeDAO" ref="frameTreeDAO"/>
+	</bean>
+	<bean id="frameUploadBO" class="com.njmd.bo.impl.FrameUploadBOImpl">
+		<property name="frameUploadDAO" ref="frameUploadDAO"/>
+	</bean>
+	<bean id="frameServerInfoBO" class="com.njmd.bo.impl.FrameServerInfoBOImpl">
+		<property name="frameServerinfoDAO" ref="frameServerinfoDAO"/>
+	</bean>
+	<bean id="frameNoticeBO" class="com.njmd.bo.impl.FrameNoticeBOImpl">
+		<property name="frameNoticeDAO" ref="frameNoticeDAO"/>
+	</bean>
+	<bean id="frameMenuBO" class="com.njmd.bo.impl.FrameMenuBOImpl">
+		<property name="frameMenuDAO" ref="frameMenuDAO"/>
+	</bean>
+
+	<!-- Controller -->
+    <bean name="/servletAction"
+		class="com.manager.servlet.ServletAction">
+		<property name="sysDAO" ref="sysDAO" />
+		<property name="adminDAO" ref="adminDAO" />
+		<property name="userDAO" ref="userDAO" />
+		<property name="logDAO" ref="logDAO" />
+		<property name="frameUserBO" ref="frameUserBO" />
+		<property name="frameRoleBO" ref="frameRoleBO" />
+		<property name="frameTreeBO" ref="frameTreeBO" />
+		<property name="frameServerInfoBO" ref="frameServerInfoBO" />
+		<property name="frameUploadBO" ref="frameUploadBO" />
+		<property name="frameMenuBO" ref="frameMenuBO" />
+	</bean>
+
+	<bean name="/adminAction"
+		class="com.manager.admin.controller.AdminAction">
+		<property name="adminDAO" ref="adminDAO" />
+		<property name="sysDAO" ref="sysDAO" />
+		<property name="logDAO" ref="logDAO" />
+	</bean>
+
+	<bean name="/userAction"
+		class="com.manager.player.controller.UserAction">
+		<property name="logDAO" ref="logDAO" />
+		<property name="sysDAO" ref="sysDAO" />
+		<property name="adminDAO" ref="adminDAO" />
+		<property name="frameRoleBO" ref="frameRoleBO" />
+		<property name="frameTreeBO" ref="frameTreeBO" />
+		<property name="frameUserBO" ref="frameUserBO" />
+		<property name="frameUploadBO" ref="frameUploadBO" />
+		<property name="frameNoticeBO" ref="frameNoticeBO" />
+		<property name="frameMenuBO" ref="frameMenuBO" />
+	</bean>
+
+	<bean name="/clientAction"
+		class="com.manager.player.controller.ClientAction">
+		<property name="userDAO" ref="userDAO" />
+		<property name="logDAO" ref="logDAO" />
+		<property name="sysDAO" ref="sysDAO" />
+	</bean>
+
+    <bean name="/sysAction"
+		class="com.manager.admin.controller.SysAction">
+		<property name="sysDAO" ref="sysDAO" />
+		<property name="frameServerInfoBO" ref="frameServerInfoBO" />
+		<property name="frameUploadBO" ref="frameUploadBO" />
+	</bean>
+
+	<bean name="/interfaceAction"
+		class="com.manager.player.controller.InterfaceAction">
+		<property name="userDAO" ref="userDAO" />
+		<property name="logDAO" ref="logDAO" />
+		<property name="sysDAO" ref="sysDAO" />
+		<property name="adminDAO" ref="adminDAO" />
+	</bean>
+</beans>

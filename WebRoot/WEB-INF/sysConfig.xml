@@ -1,0 +1,43 @@
+<com.manager.pub.bean.SystemConfig>
+  <readFilePath>E:/</readFilePath>
+  <saveFilePath>F:/</saveFilePath>
+  <ffmpegBegin>22</ffmpegBegin>
+  <ffmpegEnd>06</ffmpegEnd>
+  <ffmpegSleep>600000</ffmpegSleep>
+  <sysLoginName>admin</sysLoginName>
+  <sysLoginPswd>121212</sysLoginPswd>
+  <!-- 是否限制超级管理员登录IP N-不限制 Y-限制 -->
+  <loginIPFilter>N</loginIPFilter>
+  <!-- 超级管理员允许登录的IP 前提loginIPFilter的值是Y -->
+  <loginIPList>
+    <string>127.0.0.1</string>
+    <string>192.168.16.204</string>
+    <string>192.168.0.102</string>
+    <string>192.168.0.110</string>
+    <string>localhost</string>
+  </loginIPList>
+  <!-- 资源文件路径 -->
+  <fileRoot>D:\TrafficSysFiles\</fileRoot>
+  <!-- 截图工具 -->
+  <ffmpegPath>D:\ffmpeg\Libs\ffmpeg</ffmpegPath>
+  <!-- 转flv工具 暂时不转 -->
+  <formatFactoryPath>D:\FreeTime\FormatFactory\FFModules\ffmpeg</formatFactoryPath>
+  <!-- 本机IP -->
+  <fileSavePath>http://192.168.1.100</fileSavePath>
+  <!-- 监控盘符空间大小 -->
+  <letter>D</letter>
+  <!-- 文件有效期 -->
+  <expiredDay>2</expiredDay>
+  <!-- 重置密码 -->
+  <resetPswd>888888</resetPswd>
+  <!-- ftp地址 -->
+  <ftpHost>192.168.1.100</ftpHost>
+  <!-- ftp端口 -->
+  <ftpPort>21</ftpPort>
+  <!-- ftp用户 -->
+  <ftpUser>ftpdemo</ftpUser>
+  <!-- ftp密码 -->
+  <ftpPswd>ftpdemo</ftpPswd>
+  <!-- 监控请求地址 -->
+  <listenUrl>http://127.0.0.1/sysAction.do?method=serverInfoAdd</listenUrl>
+</com.manager.pub.bean.SystemConfig>

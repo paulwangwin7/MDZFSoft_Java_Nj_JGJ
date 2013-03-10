@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver">
+		</property>
+		<property name="url"
+			value="jdbc:oracle:thin:@127.0.0.1:1521:orcl">
+		</property>
+		<property name="username" value="njmd"></property>
+		<property name="password" value="njmdpass"></property>
+	</bean>
+	
+	<!-- DAO -->
+	<bean id="adminDAO" class="com.manager.admin.dao.AdminDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="userDAO" class="com.manager.player.dao.UserDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="sysDAO" class="com.manager.admin.dao.SysDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="logDAO" class="com.manager.admin.dao.LogDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- Controller -->
+    <bean name="/servletAction"
+		class="com.manager.servlet.ServletAction">
+		<property name="sysDAO" ref="sysDAO" />
+		<property name="adminDAO" ref="adminDAO" />
+		<property name="userDAO" ref="userDAO" />
+		<property name="logDAO" ref="logDAO" />
+	</bean>
+
+	<bean name="/adminAction"
+		class="com.manager.admin.controller.AdminAction">
+		<property name="adminDAO" ref="adminDAO" />
+		<property name="sysDAO" ref="sysDAO" />
+		<property name="logDAO" ref="logDAO" />
+	</bean>
+
+	<bean name="/userAction"
+		class="com.manager.player.controller.UserAction">
+		<property name="userDAO" ref="userDAO" />
+		<property name="logDAO" ref="logDAO" />
+		<property name="sysDAO" ref="sysDAO" />
+		<property name="adminDAO" ref="adminDAO" />
+	</bean>
+
+	<bean name="/clientAction"
+		class="com.manager.player.controller.ClientAction">
+		<property name="userDAO" ref="userDAO" />
+		<property name="logDAO" ref="logDAO" />
+		<property name="sysDAO" ref="sysDAO" />
+	</bean>
+
+    <bean name="/sysAction"
+		class="com.manager.admin.controller.SysAction">
+		<property name="sysDAO" ref="sysDAO" />
+	</bean>
+
+	<bean name="/interfaceAction"
+		class="com.manager.player.controller.InterfaceAction">
+		<property name="userDAO" ref="userDAO" />
+		<property name="logDAO" ref="logDAO" />
+		<property name="sysDAO" ref="sysDAO" />
+		<property name="adminDAO" ref="adminDAO" />
+	</bean>
+</beans>

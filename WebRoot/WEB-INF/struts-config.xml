@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<data-sources></data-sources>
+	<form-beans></form-beans>
+	<global-exceptions />
+	<global-forwards>
+		<!-- sys forwards -->
+		<forward name="result" path="/result.jsp" /><!-- GSON返回报文页面 -->
+		<forward name="user_noticeDetail" path="/noticeDetail.jsp"></forward>
+		<forward name="userMain" path="/main.jsp" /><!-- 我的主页 -->
+		<forward name="user_treeManager" path="/treeManager.jsp" /><!-- 部门管理 -->
+		<forward name="user_roleManager" path="/roleManager.jsp" /><!-- 角色管理 -->
+		<forward name="userNoticeManager" path="/noticeManager.jsp" /><!-- 公告管理 -->
+		<forward name="toUserAdd" path="/register.jsp" /><!-- 用户注册 -->
+		<forward name="userManager" path="/userManager.jsp" /><!-- 用户查询管理 -->
+		<forward name="uploadFileShow" path="/uploadManager.jsp" /><!-- 文件管理 文件查看 -->
+		<forward name="userFileUpload" path="/fileUpload.jsp" /><!-- 文件管理 文件上传 -->
+		<forward name="expiredFileList" path="/expiredFileList.jsp" /><!-- 文件管理 文件删除 -->
+		<forward name="userActionLogManager" path="/actionLog.jsp" /><!-- 日常查询 操作日志 -->
+		<forward name="user_login" path="/login.jsp" /><!-- 系统登录首页 -->
+		<forward name="noticePageList" path="/noticeList.jsp" /><!-- 我的主页 所有公告 -->
+		<forward name="fileShow" path="/uploadList.jsp" /><!-- 我的主页 我的上传 -->
+		<forward name="result_serverimg" path="/img_area.jsp" /><!-- 系统监控 图形组件 -->
+		<forward name="analysisPie" path="/img_pie.jsp" /><!-- 中队上传统计报表饼状图 -->
+		<forward name="analysisBasic" path="/img_basic.jsp" /><!-- 警员上传统计报表柱状图 -->
+		<forward name="analysisLine" path="/img_line.jsp" /><!-- 大队上传统计报表线形图 -->
+		<forward name="analysisUpload" path="/analysisUpload.jsp" /><!-- 日常查询 上传报表 -->
+		<forward name="userSelect" path="/userSelect.jsp" /><!-- 选择警员 -->
+		<forward name="frame_information" path="/frame_information.jsp" />
+		<forward name="db" path="/db.jsp" />
+
+		<forward name="information" path="/information.jsp" />
+		<forward name="login_information" path="/login_information.jsp" />
+		<forward name="noticeManager" path="/jsp/admin/noticeManager.jsp" />
+		<forward name="noticeManagerToMdf" path="/jsp/admin/noticeManagerMdf.jsp" />
+		<forward name="user_noticeListFrame" path="/userNoticeListFrame.jsp" />
+		<forward name="user_noticeForm" path="/userNoticeForm.jsp" />
+		<forward name="user_noticeListIndex" path="/userNoticeListIndex.jsp" />
+		<forward name="noticeQueryShow" path="/noticeQueryShow.jsp" />
+		<forward name="result_uploadlogimg_tree1" path="/result_uploadlogimg_tree1.jsp" />
+		<forward name="result_uploadlogimg_tree2" path="/result_uploadlogimg_tree2.jsp" />
+		<forward name="result_uploadlogimg_user" path="/result_uploadlogimg_user.jsp" />
+		<forward name="uploadManager" path="jsp/admin/uploadManager.jsp" />
+		<forward name="servletResult" path="/servletResult.jsp" /><!-- 消息 返回json报文 -->
+		<forward name="noticeNewList" path="/common/notice.jsp" /><!-- 最新公告 ****取消 -->
+		<forward name="treeManager" path="/common/treeManagerAdd.jsp" /><!-- 用户 部门添加 -->
+		<forward name="treeSelect" path="/treeSelect.jsp" /><!-- 选择部门 -->
+		<forward name="treeChoose" path="/treeChoose.jsp" /><!-- 选择部门 多选 -->
+		<forward name="roleSelect" path="/roleSelect.jsp" /><!-- 选择角色 -->
+		<forward name="toUserAddOrMdf" path="/common/userManagerAdd.jsp" /><!-- 用户信息添加（注册）/修改 -->
+		<forward name="playFile" path="/play.jsp" /><!-- 文件播放 -->
+		<forward name="noticeManagerToAdd" path="/common/noticeManagerAdd.jsp" /><!-- 公告添加 -->
+		
+		<!-- admin forwards -->
+		<forward name="adminMain" path="/admin/main.jsp" /><!-- 系统管理员主页 -->
+		<forward name="adminLogin" path="/sysLogin.html" /><!-- 系统管理员登录界面 -->
+		<forward name="roleManager" path="/jsp/admin/roleManager.jsp" />
+		<forward name="roleManagerToAdd" path="/jsp/admin/roleManagerAdd.jsp" />
+		<forward name="upload_log" path="/jsp/admin/uploadLog.jsp" />
+		<forward name="fileList_expired" path="/jsp/admin/fileList_expired.jsp" />
+		<forward name="actionLogManager" path="/jsp/admin/actionLogManager.jsp" />
+		<!-- user forwards -->
+		<forward name="user_roleManagerToAdd" path="/common/roleManagerAdd.jsp" />
+		<forward name="user_treeSelect" path="/jsp/user/treeSelect.jsp" />
+		<forward name="user_treeListSelect" path="/jsp/user/treeListSelect.jsp" />
+		<forward name="user_roleSelect" path="/jsp/user/roleSelect.jsp" />
+		<forward name="user_userManager" path="/jsp/user/userManager.jsp" />
+		<forward name="user_upload_log" path="/jsp/user/uploadLog.jsp" />
+		<forward name="userNoticeManagerToMdf" path="/jsp/user/noticeManagerMdf.jsp" />
+		<forward name="userNoticeManagerToAdd" path="/jsp/user/noticeManagerAdd.jsp" />
+		<forward name="user_userSelect" path="/jsp/user/userSelect.jsp" />
+		<!-- client forwards -->
+		<forward name="clientUploadFileShow" path="/jsp/client/fileUploadShow.jsp" />
+	</global-forwards>
+
+	<action-mappings>
+		<!-- Servlet相关操作 -->
+		<action path="/servletAction" scope="request" parameter="method"
+			type="org.springframework.web.struts.DelegatingActionProxy">
+		</action>
+		<!-- 管理员相关操作 -->
+		<action path="/adminAction" scope="request" parameter="method"
+			type="org.springframework.web.struts.DelegatingActionProxy">
+		</action>
+		<!-- 用户相关操作 -->
+		<action path="/userAction" scope="request" parameter="method"
+			type="org.springframework.web.struts.DelegatingActionProxy">
+		</action>
+		<!-- 系统相关操作 -->
+		<action path="/sysAction" scope="request" parameter="method"
+			type="org.springframework.web.struts.DelegatingActionProxy">
+		</action>
+		<!-- 客户端相关操作 -->
+		<action path="/clientAction" scope="request" parameter="method"
+			type="org.springframework.web.struts.DelegatingActionProxy">
+		</action>
+		<!-- 用户相关操作 -->
+		<action path="/interfaceAction" scope="request" parameter="method"
+			type="org.springframework.web.struts.DelegatingActionProxy">
+		</action>
+	</action-mappings>
+	<message-resources parameter="com.manager.ApplicationResources" />
+</struts-config>

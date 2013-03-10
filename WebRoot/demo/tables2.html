@@ -1,0 +1,1325 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Adminique - admin template</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+	<link rel="stylesheet" type="text/css" href="css/skins/blue.css" title="blue">
+    <link rel="alternate stylesheet" type="text/css" href="css/skins/orange.css" title="orange">
+    <link rel="alternate stylesheet" type="text/css" href="css/skins/red.css" title="red">
+    <link rel="alternate stylesheet" type="text/css" href="css/skins/green.css" title="green">
+    <link rel="alternate stylesheet" type="text/css" href="css/skins/purple.css" title="purple">
+    <link rel="alternate stylesheet" type="text/css" href="css/skins/yellow.css" title="yellow">
+    <link rel="alternate stylesheet" type="text/css" href="css/skins/black.css" title="black">
+    <link rel="alternate stylesheet" type="text/css" href="css/skins/blue.css" title="blue">
+	<link rel="alternate stylesheet" type="text/css" href="css/skins/gray.css" title="gray">
+
+
+    <link rel="stylesheet" type="text/css" href="css/superfish.css">
+    <link rel="stylesheet" type="text/css" href="css/uniform.default.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.wysiwyg.css">
+    <link rel="stylesheet" type="text/css" href="css/facebox.css">
+    <link rel="stylesheet" type="text/css" href="css/demo_table_jui.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.8.custom.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="css/smoothness/jquery.ui.dialog.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="css/jquery/jquery.ui.all.css" media="screen" />-->
+    <link rel="stylesheet" type="text/css" href="css/hot-sneaks/jquery-ui-1.8.13.custom.css" media="screen" />
+
+    <!--[if lte IE 8]>
+    <script type="text/javascript" src="js/html5.js"></script>
+    <script type="text/javascript" src="js/selectivizr.js"></script>
+    <script type="text/javascript" src="js/excanvas.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+    <!--<script type="text/javascript" src="js/jquery-ui-1.8.8.custom.min.js"></script>-->
+    <script type="text/javascript" src="js/jquery-ui-1.8.13.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/jquery.uniform.min.js"></script>
+    <script type="text/javascript" src="js/jquery.wysiwyg.js"></script>
+    <script type="text/javascript" src="js/superfish.js"></script>
+    <!--<script type="text/javascript" src="js/cufon-yui.js"></script>-->
+    <!--<script type="text/javascript" src="js/Delicious_500.font.js"></script>-->
+    <script type="text/javascript" src="js/jquery.flot.min.js"></script>
+    <script type="text/javascript" src="js/custom.js"></script>
+    <script type="text/javascript" src="js/facebox.js"></script>
+    <script type="text/javascript">
+        jQuery(function($) {
+            $('#datatable').dataTable({
+                'bJQueryUI': true,
+                'sPaginationType': 'full_numbers'
+            });
+        });
+    </script>
+
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/switcher.js"></script>
+
+</head>
+<body>
+
+<header id="top">
+    <div class="container_12 clearfix">
+        <div id="logo" class="grid_5">
+            <!-- replace with your website title or logo -->
+            <a id="site-title" href="dashboard.html"><span>Admin</span>ique</a>
+            <a id="view-site" href="#">View Site</a>
+        </div>
+
+        <div class="grid_4" id="colorstyle">
+            <div>Change Color</div>
+            <a href="#" rel="blue"></a>
+            <a href="#" rel="green"></a>
+            <a href="#" rel="red"></a>
+            <a href="#" rel="purple"></a>
+            <a href="#" rel="orange"></a>
+            <a href="#" rel="yellow"></a>
+            <a href="#" rel="black"></a>
+            <a href="#" rel="gray"></a>
+        </div>
+
+        <div id="userinfo" class="grid_3">
+            Welcome, <a href="#">Administrator</a>
+        </div>
+    </div>
+</header>
+
+<nav id="topmenu">
+    <div class="container_12 clearfix">
+        <div class="grid_12">
+            <ul id="mainmenu" class="sf-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="styles.html">Styles</a></li>
+                <li class="current"><a href="tables.html">Tables</a></li>
+                <li><a href="forms.html">Forms</a></li>
+                <li><a href="#">Sample Pages</a>
+                    <ul>
+                        <li><a href="news.html">News</a></li>
+                        <li><a href="gallery.html">Photo Gallery</a></li>
+                        <li><a href="settings.html">Settings</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Layout Width</a>
+                    <ul id="layoutwidth">
+                        <li><a href="#" rel="fixed">Fixed</a></li>
+                        <li><a href="#" rel="fluid">Fluid</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul id="usermenu">
+                <li><a href="#" class="inbox">Inbox (3)</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section id="content">
+<section class="container_12 clearfix">
+<section id="main">
+<article>
+<h1>Tables</h1>
+
+<ul class="tabs">
+    <li><a href="#tabs-1">Standard Table</a></li>
+    <li><a href="#tabs-2">Master-Detail Table</a></li>
+    <li><a href="#tabs-3">DataTables Plugin</a></li>
+</ul>
+<!-- dialog -->
+<div id="dialog-message" title="Download complete">
+    <p>
+        <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+        Your files have downloaded successfully into the My Downloads folder.
+    </p>
+
+    <p>
+        Currently using <b>36% of your storage space</b>.
+    </p>
+</div>
+<!-- end dialog -->
+<div class="tabcontent">
+<div id="tabs-1">
+    <div class="tableheader clearfix">
+        <div class="actions">
+            <button class="button small blue">添加产品</button>
+            <button class="button blue small" id='dialog'>dialog</button>
+        </div>
+        <div class="search">SEARCH<input type="text" /></div>
+    </div>
+
+    <form>
+        <table id="table1" class="gtable sortable">
+            <thead>
+            <tr>
+                <th><input type="checkbox" class="checkall" /></th>
+                <th>Column 1</th>
+                <th>Column 2</th>
+                <th>Column 3</th>
+                <th>Column 4</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td>Lorem ipsum 1</td>
+                <td>dolor sit amet</td>
+                <td>consectetur adipiscing elit</td>
+                <td>
+                    <img class="move" src="images/icons/arrow-move.png" alt="Move" title="Move" />
+                    <a href="#" title="Edit"><img src="images/icons/edit.png" alt="Edit" /></a>
+                    <a href="#" title="Delete"><img src="images/icons/cross.png" alt="Delete" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td>Lorem ipsum 2</td>
+                <td>dolor sit amet</td>
+                <td>consectetur adipiscing elit</td>
+                <td>
+                    <img class="move" src="images/icons/arrow-move.png" alt="Move" title="Move" />
+                    <a href="#" title="Edit"><img src="images/icons/edit.png" alt="Edit" /></a>
+                    <a href="#" title="Delete"><img src="images/icons/cross.png" alt="Delete" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td>Lorem ipsum 3</td>
+                <td>dolor sit amet</td>
+                <td>consectetur adipiscing elit</td>
+                <td>
+                    <img class="move" src="images/icons/arrow-move.png" alt="Move" title="Move" />
+                    <a href="#" title="Edit"><img src="images/icons/edit.png" alt="Edit" /></a>
+                    <a href="#" title="Delete"><img src="images/icons/cross.png" alt="Delete" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td>Lorem ipsum 4</td>
+                <td>dolor sit amet</td>
+                <td>consectetur adipiscing elit</td>
+                <td>
+                    <img class="move" src="images/icons/arrow-move.png" alt="Move" title="Move" />
+                    <a href="#" title="Edit"><img src="images/icons/edit.png" alt="Edit" /></a>
+                    <a href="#" title="Delete"><img src="images/icons/cross.png" alt="Delete" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td>Lorem ipsum 5</td>
+                <td>dolor sit amet</td>
+                <td>consectetur adipiscing elit</td>
+                <td>
+                    <img class="move" src="images/icons/arrow-move.png" alt="Move" title="Move" />
+                    <a href="#" title="Edit"><img src="images/icons/edit.png" alt="Edit" /></a>
+                    <a href="#" title="Delete"><img src="images/icons/cross.png" alt="Delete" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td>Lorem ipsum 6</td>
+                <td>dolor sit amet</td>
+                <td>consectetur adipiscing elit</td>
+                <td>
+                    <img class="move" src="images/icons/arrow-move.png" alt="Move" title="Move" />
+                    <a href="#" title="Edit"><img src="images/icons/edit.png" alt="Edit" /></a>
+                    <a href="#" title="Delete"><img src="images/icons/cross.png" alt="Delete" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td>Lorem ipsum 7</td>
+                <td>dolor sit amet</td>
+                <td>consectetur adipiscing elit</td>
+                <td>
+                    <img class="move" src="images/icons/arrow-move.png" alt="Move" title="Move" />
+                    <a href="#" title="Edit"><img src="images/icons/edit.png" alt="Edit" /></a>
+                    <a href="#" title="Delete"><img src="images/icons/cross.png" alt="Delete" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td>Lorem ipsum 8</td>
+                <td>dolor sit amet</td>
+                <td>consectetur adipiscing elit</td>
+                <td>
+                    <img class="move" src="images/icons/arrow-move.png" alt="Move" title="Move" />
+                    <a href="#" title="Edit"><img src="images/icons/edit.png" alt="Edit" /></a>
+                    <a href="#" title="Delete"><img src="images/icons/cross.png" alt="Delete" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td>Lorem ipsum 9</td>
+                <td>dolor sit amet</td>
+                <td>consectetur adipiscing elit</td>
+                <td>
+                    <img class="move" src="images/icons/arrow-move.png" alt="Move" title="Move" />
+                    <a href="#" title="Edit"><img src="images/icons/edit.png" alt="Edit" /></a>
+                    <a href="#" title="Delete"><img src="images/icons/cross.png" alt="Delete" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td>Lorem ipsum 10</td>
+                <td>dolor sit amet</td>
+                <td>consectetur adipiscing elit</td>
+                <td>
+                    <img class="move" src="images/icons/arrow-move.png" alt="Move" title="Move" />
+                    <a href="#" title="Edit"><img src="images/icons/edit.png" alt="Edit" /></a>
+                    <a href="#" title="Delete"><img src="images/icons/cross.png" alt="Delete" /></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="tablefooter clearfix">
+            <div class="actions">
+                <select>
+                    <option>Action:</option>
+                    <option>Delete</option>
+                    <option>Move</option>
+                </select>
+                <button class="button small">Apply</button>
+            </div>
+            <div class="pagination">
+                <!--<a href="#">Prev</a>-->
+                <a href="#" class="current">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                ...
+                <a href="#">78</a>
+                <a href="#">Next</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="tabs-2">
+<table id="table2" class="gtable detailtable">
+<thead>
+<tr>
+    <th><input type="checkbox" class="checkall" /></th>
+    <th>Order ID</th>
+    <th>Order Date</th>
+    <th>Customer Name</th>
+    <th>E-mail</th>
+    <th>Total</th>
+    <th>Detail Order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td><input type="checkbox" /></td>
+    <td>101</td>
+    <td>11/12/2010</td>
+    <td>Lorem Ipsum 1</td>
+    <td>example@example.com</td>
+    <td>924.55</td>
+    <td>
+        <a href="#" class="detail-link">Detail</a>
+    </td>
+</tr>
+<tr class="detail">
+    <td colspan="7">
+        <table>
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>345</td>
+                <td>Product 1</td>
+                <td>10.14</td>
+                <td>4</td>
+                <td>40.56</td>
+            </tr>
+            <tr>
+                <td>456</td>
+                <td>Product 2</td>
+                <td>10.14</td>
+                <td>2</td>
+                <td>20.28</td>
+            </tr>
+            <tr>
+                <td>678</td>
+                <td>Product 3</td>
+                <td>10.14</td>
+                <td>3</td>
+                <td>30.42</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Product 4</td>
+                <td>10.14</td>
+                <td>1</td>
+                <td>10.14</td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td><input type="checkbox" /></td>
+    <td>102</td>
+    <td>11/12/2010</td>
+    <td>Lorem Ipsum 2</td>
+    <td>example@example.com</td>
+    <td>635.45</td>
+    <td>
+        <a href="#" class="detail-link">Detail</a>
+    </td>
+</tr>
+<tr class="detail">
+    <td colspan="7">
+        <table>
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>345</td>
+                <td>Product 1</td>
+                <td>10.14</td>
+                <td>4</td>
+                <td>40.56</td>
+            </tr>
+            <tr>
+                <td>456</td>
+                <td>Product 2</td>
+                <td>10.14</td>
+                <td>2</td>
+                <td>20.28</td>
+            </tr>
+            <tr>
+                <td>678</td>
+                <td>Product 3</td>
+                <td>10.14</td>
+                <td>3</td>
+                <td>30.42</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Product 4</td>
+                <td>10.14</td>
+                <td>1</td>
+                <td>10.14</td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td><input type="checkbox" /></td>
+    <td>103</td>
+    <td>11/12/2010</td>
+    <td>Lorem Ipsum 3</td>
+    <td>example@example.com</td>
+    <td>775.23</td>
+    <td>
+        <a href="#" class="detail-link">Detail</a>
+    </td>
+</tr>
+<tr class="detail">
+    <td colspan="7">
+        <table>
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>345</td>
+                <td>Product 1</td>
+                <td>10.14</td>
+                <td>4</td>
+                <td>40.56</td>
+            </tr>
+            <tr>
+                <td>456</td>
+                <td>Product 2</td>
+                <td>10.14</td>
+                <td>2</td>
+                <td>20.28</td>
+            </tr>
+            <tr>
+                <td>678</td>
+                <td>Product 3</td>
+                <td>10.14</td>
+                <td>3</td>
+                <td>30.42</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Product 4</td>
+                <td>10.14</td>
+                <td>1</td>
+                <td>10.14</td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td><input type="checkbox" /></td>
+    <td>104</td>
+    <td>11/12/2010</td>
+    <td>Lorem Ipsum 4</td>
+    <td>example@example.com</td>
+    <td>903.12</td>
+    <td>
+        <a href="#" class="detail-link">Detail</a>
+    </td>
+</tr>
+<tr class="detail">
+    <td colspan="7">
+        <table>
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>345</td>
+                <td>Product 1</td>
+                <td>10.14</td>
+                <td>4</td>
+                <td>40.56</td>
+            </tr>
+            <tr>
+                <td>456</td>
+                <td>Product 2</td>
+                <td>10.14</td>
+                <td>2</td>
+                <td>20.28</td>
+            </tr>
+            <tr>
+                <td>678</td>
+                <td>Product 3</td>
+                <td>10.14</td>
+                <td>3</td>
+                <td>30.42</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Product 4</td>
+                <td>10.14</td>
+                <td>1</td>
+                <td>10.14</td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td><input type="checkbox" /></td>
+    <td>105</td>
+    <td>11/12/2010</td>
+    <td>Lorem Ipsum 5</td>
+    <td>example@example.com</td>
+    <td>400.12</td>
+    <td>
+        <a href="#" class="detail-link">Detail</a>
+    </td>
+</tr>
+<tr class="detail">
+    <td colspan="7">
+        <table>
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>345</td>
+                <td>Product 1</td>
+                <td>10.14</td>
+                <td>4</td>
+                <td>40.56</td>
+            </tr>
+            <tr>
+                <td>456</td>
+                <td>Product 2</td>
+                <td>10.14</td>
+                <td>2</td>
+                <td>20.28</td>
+            </tr>
+            <tr>
+                <td>678</td>
+                <td>Product 3</td>
+                <td>10.14</td>
+                <td>3</td>
+                <td>30.42</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Product 4</td>
+                <td>10.14</td>
+                <td>1</td>
+                <td>10.14</td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td><input type="checkbox" /></td>
+    <td>106</td>
+    <td>11/12/2010</td>
+    <td>Lorem Ipsum 6</td>
+    <td>example@example.com</td>
+    <td>250.66</td>
+    <td>
+        <a href="#" class="detail-link">Detail</a>
+    </td>
+</tr>
+<tr class="detail">
+    <td colspan="7">
+        <table>
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>345</td>
+                <td>Product 1</td>
+                <td>10.14</td>
+                <td>4</td>
+                <td>40.56</td>
+            </tr>
+            <tr>
+                <td>456</td>
+                <td>Product 2</td>
+                <td>10.14</td>
+                <td>2</td>
+                <td>20.28</td>
+            </tr>
+            <tr>
+                <td>678</td>
+                <td>Product 3</td>
+                <td>10.14</td>
+                <td>3</td>
+                <td>30.42</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Product 4</td>
+                <td>10.14</td>
+                <td>1</td>
+                <td>10.14</td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td><input type="checkbox" /></td>
+    <td>107</td>
+    <td>11/12/2010</td>
+    <td>Lorem Ipsum 7</td>
+    <td>example@example.com</td>
+    <td>658.72</td>
+    <td>
+        <a href="#" class="detail-link">Detail</a>
+    </td>
+</tr>
+<tr class="detail">
+    <td colspan="7">
+        <table>
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>345</td>
+                <td>Product 1</td>
+                <td>10.14</td>
+                <td>4</td>
+                <td>40.56</td>
+            </tr>
+            <tr>
+                <td>456</td>
+                <td>Product 2</td>
+                <td>10.14</td>
+                <td>2</td>
+                <td>20.28</td>
+            </tr>
+            <tr>
+                <td>678</td>
+                <td>Product 3</td>
+                <td>10.14</td>
+                <td>3</td>
+                <td>30.42</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Product 4</td>
+                <td>10.14</td>
+                <td>1</td>
+                <td>10.14</td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td><input type="checkbox" /></td>
+    <td>108</td>
+    <td>11/12/2010</td>
+    <td>Lorem Ipsum 8</td>
+    <td>example@example.com</td>
+    <td>112.56</td>
+    <td>
+        <a href="#" class="detail-link">Detail</a>
+    </td>
+</tr>
+<tr class="detail">
+    <td colspan="7">
+        <table>
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>345</td>
+                <td>Product 1</td>
+                <td>10.14</td>
+                <td>4</td>
+                <td>40.56</td>
+            </tr>
+            <tr>
+                <td>456</td>
+                <td>Product 2</td>
+                <td>10.14</td>
+                <td>2</td>
+                <td>20.28</td>
+            </tr>
+            <tr>
+                <td>678</td>
+                <td>Product 3</td>
+                <td>10.14</td>
+                <td>3</td>
+                <td>30.42</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Product 4</td>
+                <td>10.14</td>
+                <td>1</td>
+                <td>10.14</td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td><input type="checkbox" /></td>
+    <td>109</td>
+    <td>11/12/2010</td>
+    <td>Lorem Ipsum 9</td>
+    <td>example@example.com</td>
+    <td>776.12</td>
+    <td>
+        <a href="#" class="detail-link">Detail</a>
+    </td>
+</tr>
+<tr class="detail">
+    <td colspan="7">
+        <table>
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>345</td>
+                <td>Product 1</td>
+                <td>10.14</td>
+                <td>4</td>
+                <td>40.56</td>
+            </tr>
+            <tr>
+                <td>456</td>
+                <td>Product 2</td>
+                <td>10.14</td>
+                <td>2</td>
+                <td>20.28</td>
+            </tr>
+            <tr>
+                <td>678</td>
+                <td>Product 3</td>
+                <td>10.14</td>
+                <td>3</td>
+                <td>30.42</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Product 4</td>
+                <td>10.14</td>
+                <td>1</td>
+                <td>10.14</td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td><input type="checkbox" /></td>
+    <td>110</td>
+    <td>11/12/2010</td>
+    <td>Lorem Ipsum 10</td>
+    <td>example@example.com</td>
+    <td>470.81</td>
+    <td>
+        <a href="#" class="detail-link">Detail</a>
+    </td>
+</tr>
+<tr class="detail">
+    <td colspan="7">
+        <table>
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>345</td>
+                <td>Product 1</td>
+                <td>10.14</td>
+                <td>4</td>
+                <td>40.56</td>
+            </tr>
+            <tr>
+                <td>456</td>
+                <td>Product 2</td>
+                <td>10.14</td>
+                <td>2</td>
+                <td>20.28</td>
+            </tr>
+            <tr>
+                <td>678</td>
+                <td>Product 3</td>
+                <td>10.14</td>
+                <td>3</td>
+                <td>30.42</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Product 4</td>
+                <td>10.14</td>
+                <td>1</td>
+                <td>10.14</td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+<div id="tabs-3">
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="datatable">
+<thead>
+<tr>
+    <th>Rendering engine</th>
+    <th>Browser</th>
+    <th>Platform(s)</th>
+    <th>Engine version</th>
+    <th>CSS grade</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd gradeX">
+    <td>Trident</td>
+    <td>Internet
+        Explorer 4.0
+    </td>
+    <td>Win 95+</td>
+    <td class="center"> 4</td>
+    <td class="center">X</td>
+</tr>
+<tr class="even gradeC">
+    <td>Trident</td>
+    <td>Internet
+        Explorer 5.0
+    </td>
+    <td>Win 95+</td>
+    <td class="center">5</td>
+    <td class="center">C</td>
+</tr>
+<tr class="odd gradeA">
+    <td>Trident</td>
+    <td>Internet
+        Explorer 5.5
+    </td>
+    <td>Win 95+</td>
+    <td class="center">5.5</td>
+    <td class="center">A</td>
+</tr>
+<tr class="even gradeA">
+    <td>Trident</td>
+    <td>Internet
+        Explorer 6
+    </td>
+    <td>Win 98+</td>
+    <td class="center">6</td>
+    <td class="center">A</td>
+</tr>
+<tr class="odd gradeA">
+    <td>Trident</td>
+    <td>Internet Explorer 7</td>
+    <td>Win XP SP2+</td>
+    <td class="center">7</td>
+    <td class="center">A</td>
+</tr>
+<tr class="even gradeA">
+    <td>Trident</td>
+    <td>AOL browser (AOL desktop)</td>
+    <td>Win XP</td>
+    <td class="center">6</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Firefox 1.0</td>
+    <td>Win 98+ / OSX.2+</td>
+    <td class="center">1.7</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Firefox 1.5</td>
+    <td>Win 98+ / OSX.2+</td>
+    <td class="center">1.8</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Firefox 2.0</td>
+    <td>Win 98+ / OSX.2+</td>
+    <td class="center">1.8</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Firefox 3.0</td>
+    <td>Win 2k+ / OSX.3+</td>
+    <td class="center">1.9</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Camino 1.0</td>
+    <td>OSX.2+</td>
+    <td class="center">1.8</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Camino 1.5</td>
+    <td>OSX.3+</td>
+    <td class="center">1.8</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Netscape 7.2</td>
+    <td>Win 95+ / Mac OS 8.6-9.2</td>
+    <td class="center">1.7</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Netscape Browser 8</td>
+    <td>Win 98SE+</td>
+    <td class="center">1.7</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Netscape Navigator 9</td>
+    <td>Win 98+ / OSX.2+</td>
+    <td class="center">1.8</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Mozilla 1.0</td>
+    <td>Win 95+ / OSX.1+</td>
+    <td class="center">1</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Mozilla 1.1</td>
+    <td>Win 95+ / OSX.1+</td>
+    <td class="center">1.1</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Mozilla 1.2</td>
+    <td>Win 95+ / OSX.1+</td>
+    <td class="center">1.2</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Mozilla 1.3</td>
+    <td>Win 95+ / OSX.1+</td>
+    <td class="center">1.3</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Mozilla 1.4</td>
+    <td>Win 95+ / OSX.1+</td>
+    <td class="center">1.4</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Mozilla 1.5</td>
+    <td>Win 95+ / OSX.1+</td>
+    <td class="center">1.5</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Mozilla 1.6</td>
+    <td>Win 95+ / OSX.1+</td>
+    <td class="center">1.6</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Mozilla 1.7</td>
+    <td>Win 98+ / OSX.1+</td>
+    <td class="center">1.7</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Mozilla 1.8</td>
+    <td>Win 98+ / OSX.1+</td>
+    <td class="center">1.8</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Seamonkey 1.1</td>
+    <td>Win 98+ / OSX.2+</td>
+    <td class="center">1.8</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Gecko</td>
+    <td>Epiphany 2.20</td>
+    <td>Gnome</td>
+    <td class="center">1.8</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Webkit</td>
+    <td>Safari 1.2</td>
+    <td>OSX.3</td>
+    <td class="center">125.5</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Webkit</td>
+    <td>Safari 1.3</td>
+    <td>OSX.3</td>
+    <td class="center">312.8</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Webkit</td>
+    <td>Safari 2.0</td>
+    <td>OSX.4+</td>
+    <td class="center">419.3</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Webkit</td>
+    <td>Safari 3.0</td>
+    <td>OSX.4+</td>
+    <td class="center">522.1</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Webkit</td>
+    <td>OmniWeb 5.5</td>
+    <td>OSX.4+</td>
+    <td class="center">420</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Webkit</td>
+    <td>iPod Touch / iPhone</td>
+    <td>iPod</td>
+    <td class="center">420.1</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Webkit</td>
+    <td>S60</td>
+    <td>S60</td>
+    <td class="center">413</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Presto</td>
+    <td>Opera 7.0</td>
+    <td>Win 95+ / OSX.1+</td>
+    <td class="center">-</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Presto</td>
+    <td>Opera 7.5</td>
+    <td>Win 95+ / OSX.2+</td>
+    <td class="center">-</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Presto</td>
+    <td>Opera 8.0</td>
+    <td>Win 95+ / OSX.2+</td>
+    <td class="center">-</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Presto</td>
+    <td>Opera 8.5</td>
+    <td>Win 95+ / OSX.2+</td>
+    <td class="center">-</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Presto</td>
+    <td>Opera 9.0</td>
+    <td>Win 95+ / OSX.3+</td>
+    <td class="center">-</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Presto</td>
+    <td>Opera 9.2</td>
+    <td>Win 88+ / OSX.3+</td>
+    <td class="center">-</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Presto</td>
+    <td>Opera 9.5</td>
+    <td>Win 88+ / OSX.3+</td>
+    <td class="center">-</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Presto</td>
+    <td>Opera for Wii</td>
+    <td>Wii</td>
+    <td class="center">-</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Presto</td>
+    <td>Nokia N800</td>
+    <td>N800</td>
+    <td class="center">-</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>Presto</td>
+    <td>Nintendo DS browser</td>
+    <td>Nintendo DS</td>
+    <td class="center">8.5</td>
+    <td class="center">C/A<sup>1</sup></td>
+</tr>
+<tr class="gradeC">
+    <td>KHTML</td>
+    <td>Konqureror 3.1</td>
+    <td>KDE 3.1</td>
+    <td class="center">3.1</td>
+    <td class="center">C</td>
+</tr>
+<tr class="gradeA">
+    <td>KHTML</td>
+    <td>Konqureror 3.3</td>
+    <td>KDE 3.3</td>
+    <td class="center">3.3</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeA">
+    <td>KHTML</td>
+    <td>Konqureror 3.5</td>
+    <td>KDE 3.5</td>
+    <td class="center">3.5</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeX">
+    <td>Tasman</td>
+    <td>Internet Explorer 4.5</td>
+    <td>Mac OS 8-9</td>
+    <td class="center">-</td>
+    <td class="center">X</td>
+</tr>
+<tr class="gradeC">
+    <td>Tasman</td>
+    <td>Internet Explorer 5.1</td>
+    <td>Mac OS 7.6-9</td>
+    <td class="center">1</td>
+    <td class="center">C</td>
+</tr>
+<tr class="gradeC">
+    <td>Tasman</td>
+    <td>Internet Explorer 5.2</td>
+    <td>Mac OS 8-X</td>
+    <td class="center">1</td>
+    <td class="center">C</td>
+</tr>
+<tr class="gradeA">
+    <td>Misc</td>
+    <td>NetFront 3.1</td>
+    <td>Embedded devices</td>
+    <td class="center">-</td>
+    <td class="center">C</td>
+</tr>
+<tr class="gradeA">
+    <td>Misc</td>
+    <td>NetFront 3.4</td>
+    <td>Embedded devices</td>
+    <td class="center">-</td>
+    <td class="center">A</td>
+</tr>
+<tr class="gradeX">
+    <td>Misc</td>
+    <td>Dillo 0.8</td>
+    <td>Embedded devices</td>
+    <td class="center">-</td>
+    <td class="center">X</td>
+</tr>
+<tr class="gradeX">
+    <td>Misc</td>
+    <td>Links</td>
+    <td>Text only</td>
+    <td class="center">-</td>
+    <td class="center">X</td>
+</tr>
+<tr class="gradeX">
+    <td>Misc</td>
+    <td>Lynx</td>
+    <td>Text only</td>
+    <td class="center">-</td>
+    <td class="center">X</td>
+</tr>
+<tr class="gradeC">
+    <td>Misc</td>
+    <td>IE Mobile</td>
+    <td>Windows Mobile 6</td>
+    <td class="center">-</td>
+    <td class="center">C</td>
+</tr>
+<tr class="gradeC">
+    <td>Misc</td>
+    <td>PSP browser</td>
+    <td>PSP</td>
+    <td class="center">-</td>
+    <td class="center">C</td>
+</tr>
+<tr class="gradeU">
+    <td>Other browsers</td>
+    <td>All others</td>
+    <td>-</td>
+    <td class="center">-</td>
+    <td class="center">U</td>
+</tr>
+</tbody>
+</table>
+</div>
+</article>
+</section>
+
+</section>
+</section>
+
+<footer id="bottom">
+    <section class="container_12 clearfix">
+        <div class="grid_6">
+            <a href="#">Menu 1</a>
+            &middot; <a href="#">Menu 2</a>
+            &middot; <a href="#">Menu 3</a>
+            &middot; <a href="#">Menu 4</a>
+        </div>
+        <div class="grid_6 alignright">
+            Copyright &copy; 2011 <a href="#">YourCompany.com</a>
+        </div>
+    </section>
+</footer>
+
+</body>
+</html>

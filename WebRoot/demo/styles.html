@@ -1,0 +1,298 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Adminique - admin template</title>
+<meta charset="utf-8">
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/skins/gray.css" title="gray">
+
+<link rel="alternate stylesheet" type="text/css" href="css/skins/orange.css" title="orange">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/red.css" title="red">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/green.css" title="green">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/purple.css" title="purple">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/yellow.css" title="yellow">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/black.css" title="black">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/blue.css" title="blue">
+
+<link rel="stylesheet" type="text/css" href="css/superfish.css">
+<link rel="stylesheet" type="text/css" href="css/uniform.default.css">
+<link rel="stylesheet" type="text/css" href="css/jquery.wysiwyg.css">
+<link rel="stylesheet" type="text/css" href="css/facebox.css">
+<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.8.custom.css">
+
+<!--[if lte IE 8]>
+<script type="text/javascript" src="js/html5.js"></script>
+<script type="text/javascript" src="js/selectivizr.js"></script>
+<script type="text/javascript" src="js/excanvas.min.js"></script>
+<![endif]-->
+
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.8.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/jquery.uniform.min.js"></script>
+<script type="text/javascript" src="js/jquery.wysiwyg.js"></script>
+<script type="text/javascript" src="js/superfish.js"></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/Delicious_500.font.js"></script>
+<script type="text/javascript" src="js/jquery.flot.min.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script type="text/javascript" src="js/facebox.js"></script>
+
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/switcher.js"></script>
+
+</head>
+<body>
+
+<header id="top">
+	<div class="container_12 clearfix">
+		<div id="logo" class="grid_5">
+			<!-- replace with your website title or logo -->
+			<a id="site-title" href="dashboard.html"><span>Admin</span>ique</a>
+			<a id="view-site" href="#">View Site</a>
+		</div>
+		
+		<div class="grid_4" id="colorstyle">
+			<div>Change Color</div>
+			<a href="#" rel="blue"></a>
+			<a href="#" rel="green"></a>
+			<a href="#" rel="red"></a>
+			<a href="#" rel="purple"></a>
+			<a href="#" rel="orange"></a>
+			<a href="#" rel="yellow"></a>
+			<a href="#" rel="black"></a>
+			<a href="#" rel="gray"></a>
+		</div>
+
+		<div id="userinfo" class="grid_3">
+			Welcome, <a href="#">Administrator</a>
+		</div>
+	</div>
+</header>
+
+<nav id="topmenu">
+	<div class="container_12 clearfix">
+		<div class="grid_12">
+			<ul id="mainmenu" class="sf-menu">
+				<li><a href="dashboard.html">Dashboard</a></li>
+				<li class="current"><a href="styles.html">Styles</a></li>
+				<li><a href="tables.html">Tables</a></li>
+				<li><a href="forms.html">Forms</a></li>
+				<li><a href="#">Sample Pages</a>
+					<ul>
+						<li><a href="news.html">News</a></li>
+						<li><a href="gallery.html">Photo Gallery</a></li>
+						<li><a href="settings.html">Settings</a></li>
+						<li><a href="login.html">Login</a></li>
+					</ul>
+				</li>
+				<li><a href="#">Layout Width</a>
+					<ul id="layoutwidth">
+						<li><a href="#" rel="fixed">Fixed</a></li>
+						<li><a href="#" rel="fluid">Fluid</a></li>
+					</ul>
+				</li>
+			</ul>
+			<ul id="usermenu">
+				<li><a href="#" class="inbox">Inbox (3)</a></li>
+				<li><a href="#">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<section id="content">
+	<section class="container_12 clearfix">
+		<section id="main" class="grid_9 push_3">
+			<article class="content">
+				<h1>Level 1 Heading</h1>
+				<h2>Level 2 Heading</h2>
+				<h3>Level 3 Heading</h3>
+				<h4>Level 4 Heading</h4>
+				<h5>Level 5 Heading</h5>
+				<h6>Level 6 Heading</h6>
+				<hr>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur quam augue, vehicula quis, tincidunt vel, varius vitae, nulla. Sed convallis orci. Duis libero orci, pretium a, <a href="#">convallis quis</a>, pellentesque a, dolor. Curabitur vitae nisi non dolor vestibulum consequat.</p>
+				<p><em>Vivamus id consectetur magna</em>. <strong>Nulla facilisi</strong>. Cras varius, purus at blandit eleifend, ligula erat porttitor turpis, vitae pharetra diam magna nec nunc. Curabitur egestas sagittis dui, vitae faucibus enim commodo nec. Nam vulputate, orci quis adipiscing auctor, massa ante auctor augue, id ultrices urna nulla vel arcu.</p>
+				<p><img src="images/photos/photo_01.jpg" class="alignleft" />Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+				<p><img src="images/photos/photo_07.jpg" class="alignright" />Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+
+				<h3>Unordered List</h3>
+				<ul>
+					<li>Vestibulum in mauris semper tortor interdum ultrices.</li>
+					<li>Sed vel lorem et justo laoreet bibendum. Donec dictum.
+						<ul>
+							<li>Etiam massa libero, lacinia at, commodo in, tincidunt a, purus.</li>
+							<li>Praesent volutpat eros quis enim blandit tincidunt.</li>
+						</ul>
+					</li>
+					<li>Etiam massa libero, lacinia at, commodo in, tincidunt a, purus.</li>
+					<li>Praesent volutpat eros quis enim blandit tincidunt.</li>
+				</ul>
+				<h3>Ordered List</h3>
+				<ol>
+					<li>Vestibulum in mauris semper tortor interdum ultrices.</li>
+					<li>Sed vel lorem et justo laoreet bibendum. Donec dictum.
+						<ol>
+							<li>Etiam massa libero, lacinia at, commodo in, tincidunt a, purus.</li>
+							<li>Praesent volutpat eros quis enim blandit tincidunt.</li>
+							<li>Aenean eu libero nec lectus ultricies laoreet.</li>
+						</ol>
+					</li>
+					<li>Etiam massa libero, lacinia at, commodo in, tincidunt a, purus.</li>
+					<li>Praesent volutpat eros quis enim blandit tincidunt.</li>
+				</ol>
+				<h3>Definition List</h3>
+				<dl>
+					<dt>Term 1</dt>
+					<dd>This is the definition of the first term.</dd>
+					<dt>Term 2</dt>
+					<dd>This is the definition of the second term.</dd>
+				</dl>
+			</article>
+			<article>
+				<h1>Tabs</h1>
+				<ul class="tabs">
+					<li><a href="#tabs-1">Morbi tincidunt</a></li>
+					<li><a href="#tabs-2">Mauris eleifend</a></li>
+					<li><a href="#tabs-3">Duis cursus</a></li>
+					<li><a href="#tabs-4">Nulla sagittis</a></li>
+				</ul>
+				<div class="tabcontent">
+					<div id="tabs-1">
+						<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis.</p>
+					</div>
+					<div id="tabs-2">
+						<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis.</p>
+					</div>
+					<div id="tabs-3">
+						<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+					</div>
+					<div id="tabs-4">
+						<p>Nulla sagittis convallis arcu. Sed sed nunc. Curabitur consequat. Quisque metus enim, venenatis fermentum, mollis in, porta et, nibh. Duis vulputate elit in elit. Mauris dictum libero id justo. Fusce in est. Sed nec diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque semper nibh eget nibh. Sed tempor. Fusce erat. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+					</div>
+				</div>
+			</article>
+			<article>
+				<h1>Accordion</h1>
+				<div class="accordion">
+					<h3>Section 1</h3>
+					<div>
+						<p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+					</div>
+					<h3>Section 2</h3>
+					<div>
+						<p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam.</p>
+					</div>
+					<h3>Section 3</h3>
+					<div>
+						<p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
+					</div>
+					<h3>Section 4</h3>
+					<div>
+						<p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
+					</div>
+				</div>
+			</article>
+		</section>
+		
+		<aside id="sidebar" class="grid_3 pull_9">
+			<div class="box search">
+				<form>
+					<label for="s">Search:</label>
+					<input id="s" type="text" size="20" />
+					<button class="button small">Go</button>
+				</form>
+			</div>
+			<div class="box menu">
+				<h2>Side Menu</h2>
+				<section>
+					<ul>
+						<li><a href="#">Menu Item 1</a></li>
+						<li><a href="#">Menu Item 2</a></li>
+						<li><a href="#">Menu Item 3</a></li>
+						<li><a href="#">Menu Item 4</a></li>
+						<li><a href="#">Menu Item 5</a>
+							<ul>
+								<li><a href="#">Menu Item 5.1</a></li>
+								<li><a href="#">Menu Item 5.2</a>
+									<ul>
+										<li><a href="#">Menu Item 5.2.1</a></li>
+										<li><a href="#">Menu Item 5.2.2</a></li>
+									</ul>
+								</li>
+								<li><a href="#">Menu Item 5.3</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Menu Item 6</a></li>
+					</ul>
+				</section>
+			</div>
+			<div class="box info">
+				<h2>Info</h2>
+				<section>
+					Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+				</section>
+			</div>
+			<div class="box">
+				<h2>Lorem Ipsum</h2>
+				<section>
+					Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+				</section>
+			</div>
+		</aside>
+    </section>
+    <section class="grid_12">
+
+      <!-- 2011-06-27 xiaoche
+      增加纵向tabs -->
+			<article class="clearfix">
+            <div class="topbar clearfix">
+                <span class="title floatLeft">1002243245 - 未付款 [未发货]</span>
+                <ul class="status floatRight">
+                    <li><a name="pending" href="javascript:void">付款处理中</a> | <a name="pay" href="javascript:void">付款</a> | <a name="allocate" href="javascript:void">配货中</a> | <a name="deliver"href="javascript:void">发货</a> | <a name="complete" href="javascript:void">完成订单</a> | 退货 | 退款处理中 | 退款 | <a name="cancel">取消订单</a> | 恢复订单</li>
+                </ul>
+            </div>
+
+				<ul class="tabs2">
+					<li><a href="#tabs2-1">Morbi tincidunt</a></li>
+					<li><a href="#tabs2-2">Mauris eleifend</a></li>
+					<li><a href="#tabs2-3">Duis cursus</a></li>
+					<li><a href="#tabs2-4">Nulla sagittis</a></li>
+				</ul>
+				<div class="tab2content">
+					<div id="tabs2-1">
+						<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis.</p>
+					</div>
+					<div id="tabs2-2">
+						<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis.</p>
+					</div>
+					<div id="tabs2-3">
+						<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+					</div>
+					<div id="tabs2-4">
+						<p>Nulla sagittis convallis arcu. Sed sed nunc. Curabitur consequat. Quisque metus enim, venenatis fermentum, mollis in, porta et, nibh. Duis vulputate elit in elit. Mauris dictum libero id justo. Fusce in est. Sed nec diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque semper nibh eget nibh. Sed tempor. Fusce erat. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+					</div>
+				</div>
+			</article>
+      <!-- END OF 增加纵向tabs -->
+    </section>
+</section>
+
+<footer id="bottom">
+	<section class="container_12 clearfix">
+		<div class="grid_6">
+			<a href="#">Menu 1</a>
+			&middot; <a href="#">Menu 2</a>
+			&middot; <a href="#">Menu 3</a>
+			&middot; <a href="#">Menu 4</a>
+		</div>
+		<div class="grid_6 alignright">
+			Copyright &copy; 2011 <a href="#">YourCompany.com</a>
+		</div>
+	</section>
+</footer>
+
+</body>
+</html>

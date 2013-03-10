@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Adminique - admin template</title>
+<meta charset="utf-8">
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/skins/gray.css" title="gray">
+
+<link rel="alternate stylesheet" type="text/css" href="css/skins/orange.css" title="orange">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/red.css" title="red">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/green.css" title="green">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/purple.css" title="purple">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/yellow.css" title="yellow">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/black.css" title="black">
+<link rel="alternate stylesheet" type="text/css" href="css/skins/blue.css" title="blue">
+
+<link rel="stylesheet" type="text/css" href="css/superfish.css">
+<link rel="stylesheet" type="text/css" href="css/uniform.default.css">
+<link rel="stylesheet" type="text/css" href="css/jquery.wysiwyg.css">
+<link rel="stylesheet" type="text/css" href="css/facebox.css">
+<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.8.custom.css">
+
+<!--[if lte IE 8]>
+<script type="text/javascript" src="js/html5.js"></script>
+<script type="text/javascript" src="js/selectivizr.js"></script>
+<script type="text/javascript" src="js/excanvas.min.js"></script>
+<![endif]-->
+
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.8.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/jquery.uniform.min.js"></script>
+<script type="text/javascript" src="js/jquery.wysiwyg.js"></script>
+<script type="text/javascript" src="js/superfish.js"></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/Delicious_500.font.js"></script>
+<script type="text/javascript" src="js/jquery.flot.min.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script type="text/javascript" src="js/facebox.js"></script>
+
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/switcher.js"></script>
+
+</head>
+<body>
+
+<header id="top">
+	<div class="container_12 clearfix">
+		<div id="logo" class="grid_5">
+			<!-- replace with your website title or logo -->
+			<a id="site-title" href="dashboard.html"><span>Admin</span>ique</a>
+			<a id="view-site" href="#">View Site</a>
+		</div>
+		
+		<div class="grid_4" id="colorstyle">
+			<div>Change Color</div>
+			<a href="#" rel="blue"></a>
+			<a href="#" rel="green"></a>
+			<a href="#" rel="red"></a>
+			<a href="#" rel="purple"></a>
+			<a href="#" rel="orange"></a>
+			<a href="#" rel="yellow"></a>
+			<a href="#" rel="black"></a>
+			<a href="#" rel="gray"></a>
+		</div>
+
+		<div id="userinfo" class="grid_3">
+			Welcome, <a href="#">Administrator</a>
+		</div>
+	</div>
+</header>
+
+<nav id="topmenu">
+	<div class="container_12 clearfix">
+		<div class="grid_12">
+			<ul id="mainmenu" class="sf-menu">
+				<li><a href="dashboard.html">Dashboard</a></li>
+				<li><a href="styles.html">Styles</a></li>
+				<li><a href="tables.html">Tables</a></li>
+				<li><a href="forms.html">Forms</a></li>
+				<li class="current"><a href="#">Sample Pages</a>
+					<ul>
+						<li class="current"><a href="news.html">News</a></li>
+						<li><a href="gallery.html">Photo Gallery</a></li>
+						<li><a href="settings.html">Settings</a></li>
+						<li><a href="login.html">Login</a></li>
+					</ul>
+				</li>
+				<li><a href="#">Layout Width</a>
+					<ul id="layoutwidth">
+						<li><a href="#" rel="fixed">Fixed</a></li>
+						<li><a href="#" rel="fluid">Fluid</a></li>
+					</ul>
+				</li>
+			</ul>
+			<ul id="usermenu">
+				<li><a href="#" class="inbox">Inbox (3)</a></li>
+				<li><a href="#">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<section id="content">
+	<section class="container_12 clearfix">
+		<section id="main" class="grid_9 push_3">
+			<article>
+				<h1>News</h1>
+				<form class="uniform" id='myForm' method="post">
+					<dl>
+						<dt><label for="newstitle">Title</label></dt>
+						<dd><input type="text" name="title" id="newstitle" class="big" /></dd>
+
+						<dt><label for="newsintro">Intro</label></dt>
+						<dd>
+							<textarea name="intro" id="newsintro" class="big" rows="3"></textarea>
+						</dd>
+
+						<dt><label for="newscontent">Content</label></dt>
+						<dd>
+							<textarea name="content" id="newscontent" class="big" rows="15"></textarea>
+						</dd>
+
+						<dt><label for="newscategory">Category</label></dt>
+						<dd>
+							<select size="1" name="category" id="newscategory" class="medium">
+								<option value="News">Web Design</option>
+								<option value="Girl">Photography</option>
+								<option value="Dude">CSS</option>
+								<option value="Chic">PHP</option>
+							</select>
+						</dd>
+
+						<dt><label for="newsdate">Date</label></dt>
+						<dd><input type="text" name="date" id="newsdate" /></dd>
+					</dl>
+					<p>
+						<button type="submit" class="button big">PUBLISH NEWS</button>
+						<button type="button" class="button white">Preview</button>
+						<button type="button" class="button white">Save as draft</button>
+					</p>
+				</form>
+			</article>
+			<article>
+				<h1>Recent News</h1>
+				<ul class="news">
+					<li>
+						<div class="date">Dec 02, 2010 - 8:31pm</div>
+						80 Days Around The World, We'll Find A Pot Of Gold Just Sitting Where The Rainbow's Ending.
+						<a title="Edit" href="#"><img alt="Edit" src="images/icons/edit.png"></a>
+					</li>
+					<li>
+						<div class="date">Nov 28, 2010 - 7:32pm</div>
+						Ten Years Ago A Crack Commando Unit Was Sent To Prison By A Military Court For A Crime They Didn't Commit.
+						<a title="Edit" href="#"><img alt="Edit" src="images/icons/edit.png"></a>
+					</li>
+					<li>
+						<div class="date">Nov 09, 2010 - 6:21pm</div>
+						Knight Rider, A Shadowy Flight Into The Dangerous World Of A Man Who Does Not Exist.
+						<a title="Edit" href="#"><img alt="Edit" src="images/icons/edit.png"></a>
+					</li>
+					<li>
+						<div class="date">Oct 22, 2010 - 10:09am</div>
+						Children Of The Sun, See Your Time Has Just Begun.
+						<a title="Edit" href="#"><img alt="Edit" src="images/icons/edit.png"></a>
+					</li>
+					<li>
+						<div class="date">Oct 09, 2010 - 2:49am</div>
+						Today, Still Wanted By The Government.
+						<a title="Edit" href="#"><img alt="Edit" src="images/icons/edit.png"></a>
+					</li>
+				</ul>
+			</article>
+		</section>
+		
+		<aside id="sidebar" class="grid_3 pull_9">
+			<div class="box search">
+				<form>
+					<label for="s">Search:</label>
+					<input id="s" type="text" size="20" />
+					<button class="button small">Go</button>
+				</form>
+			</div>
+			<div class="box menu">
+				<h2>Side Menu</h2>
+				<section>
+					<ul>
+						<li><a href="#">Menu Item 1</a></li>
+						<li><a href="#">Menu Item 2</a></li>
+						<li><a href="#">Menu Item 3</a></li>
+						<li><a href="#">Menu Item 4</a></li>
+						<li><a href="#">Menu Item 5</a>
+							<ul>
+								<li><a href="#">Menu Item 5.1</a></li>
+								<li><a href="#">Menu Item 5.2</a>
+									<ul>
+										<li><a href="#">Menu Item 5.2.1</a></li>
+										<li><a href="#">Menu Item 5.2.2</a></li>
+									</ul>
+								</li>
+								<li><a href="#">Menu Item 5.3</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Menu Item 6</a></li>
+					</ul>
+				</section>
+			</div>
+			<div class="box info">
+				<h2>Info</h2>
+				<section>
+					Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+				</section>
+			</div>
+			<div class="box">
+				<h2>Lorem Ipsum</h2>
+				<section>
+					Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+				</section>
+			</div>
+		</aside>
+	</section>
+</section>
+
+<footer id="bottom">
+	<section class="container_12 clearfix">
+		<div class="grid_6">
+			<a href="#">Menu 1</a>
+			&middot; <a href="#">Menu 2</a>
+			&middot; <a href="#">Menu 3</a>
+			&middot; <a href="#">Menu 4</a>
+		</div>
+		<div class="grid_6 alignright">
+			Copyright &copy; 2011 <a href="#">YourCompany.com</a>
+		</div>
+	</section>
+</footer>
+
+</body>
+</html>

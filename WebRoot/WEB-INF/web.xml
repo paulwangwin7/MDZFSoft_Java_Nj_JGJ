@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.4"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee   http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<mime-mapping>
+		<extension>cab</extension>
+		<mime-type>application/octet-stream</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>CAB</extension>
+		<mime-type>application/octet-stream</mime-type>
+	</mime-mapping>
+	
+	<filter>
+		<filter-name>SetCharacterEncoding</filter-name>
+		<filter-class>com.manager.pub.util.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>SetCharacterEncoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>
+			org.apache.struts.action.ActionServlet
+		</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/struts-config.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<init-param>
+			<param-name>detail</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/log4j.properties</param-value>
+	</context-param>
+	<context-param>
+		<param-name>xStreamConfigLocation</param-name>
+		<param-value>/WEB-INF/sysConfig.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>propertiesConfigLocation</param-name>
+		<param-value>/WEB-INF/ApplicationResources.properties</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.manager.pub.util.SysInitListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.manager.pub.util.TimerTask</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<welcome-file-list>
+  		<welcome-file>/login.jsp</welcome-file>
+ 	</welcome-file-list>
+ 	<error-page>
+ 		<error-code>500</error-code>
+ 		<location>/login.jsp</location>
+ 	</error-page>
+ 	<error-page>
+ 		<error-code>404</error-code>
+ 		<location>/login.jsp</location>
+ 	</error-page>
+</web-app>
+
