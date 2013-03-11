@@ -3,6 +3,10 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+UserForm userForm = null;
+if(request.getSession().getAttribute(Constants.SESSION_USER_FORM)!=null) {
+	userForm = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
+}
 	com.manager.pub.bean.Page pageRst = null;
 	List<UploadForm> uploadFormList = null;
 	if(request.getAttribute(Constants.PAGE_INFORMATION)!=null)
@@ -159,6 +163,13 @@ $(document).ready(function(){
 									</div>
 									<div class="clearfix mt_10">
 										<!--a href="" class="fl cancle">取消</a-->
+										<%
+											if(userForm!=null && userForm.getUserId()==0) {
+										%>
+										<a href="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getPlayPath() %>" target="_blank" class="blue_mod_btn fr">下载文件</a>
+										<%
+											}
+										%>
 										<%
 											if(uploadForm.getPlayPath()!=null && uploadForm.getPlayPath().length()>4) {
 												if(uploadForm.getPlayPath().substring(uploadForm.getPlayPath().length()-4).toLowerCase().equals(".jpg"))
