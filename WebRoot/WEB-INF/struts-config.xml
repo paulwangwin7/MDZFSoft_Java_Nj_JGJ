@@ -16,6 +16,7 @@
 		<forward name="toUserAdd" path="/register.jsp" /><!-- 用户注册 -->
 		<forward name="userManager" path="/userManager.jsp" /><!-- 用户查询管理 -->
 		<forward name="uploadFileShow" path="/uploadManager.jsp" /><!-- 文件管理 文件查看 -->
+		<forward name="uploadManager" path="/uploadManager2.jsp" /><!-- 文件管理 文件查看查询 -->
 		<forward name="userFileUpload" path="/fileUpload.jsp" /><!-- 文件管理 文件上传 -->
 		<forward name="expiredFileList" path="/expiredFileList.jsp" /><!-- 文件管理 文件删除 -->
 		<forward name="userActionLogManager" path="/actionLog.jsp" /><!-- 日常查询 操作日志 -->
@@ -28,6 +29,7 @@
 		<forward name="analysisLine" path="/img_line.jsp" /><!-- 大队上传统计报表线形图 -->
 		<forward name="analysisUpload" path="/analysisUpload.jsp" /><!-- 日常查询 上传报表 -->
 		<forward name="userSelect" path="/userSelect.jsp" /><!-- 选择警员 -->
+		<forward name="userChoose" path="/userChoose.jsp" /><!-- 选择警员 -->
 		<forward name="frame_information" path="/frame_information.jsp" />
 		<forward name="db" path="/db.jsp" />
 
@@ -42,7 +44,7 @@
 		<forward name="result_uploadlogimg_tree1" path="/result_uploadlogimg_tree1.jsp" />
 		<forward name="result_uploadlogimg_tree2" path="/result_uploadlogimg_tree2.jsp" />
 		<forward name="result_uploadlogimg_user" path="/result_uploadlogimg_user.jsp" />
-		<forward name="uploadManager" path="jsp/admin/uploadManager.jsp" />
+		<!--forward name="uploadManager" path="jsp/admin/uploadManager.jsp" /-->
 		<forward name="servletResult" path="/servletResult.jsp" /><!-- 消息 返回json报文 -->
 		<forward name="noticeNewList" path="/common/notice.jsp" /><!-- 最新公告 ****取消 -->
 		<forward name="treeManager" path="/common/treeManagerAdd.jsp" /><!-- 用户 部门添加 -->

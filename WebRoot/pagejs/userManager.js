@@ -27,11 +27,11 @@ jQuery(function($) {
 	{
 		showMsgObj('userAddMsg', '请选择性别。', 2);
 	}
-	else if($("#req_treeName").val()=='')
+	else if($("#req_treeName").val()=='' && $('#roleType').val()=='')
 	{
 		showMsgObj('userAddMsg', '请选择所属部门。', 2);
 	}
-	else if($("#req_roleName").val()=='')
+	else if($("#req_roleName").val()=='' && $('#roleType').val()=='')
 	{
 		showMsgObj('userAddMsg', '请选择所属角色。', 2);
 	}
@@ -47,7 +47,7 @@ jQuery(function($) {
 			dataType: 'json',
 			cache: false,
 			async: false,
-			data: {"userId":$("#req_userId").val(),"loginName":$("#req_loginName").val(),"loginPswd":$("#req_loginPswd").val(),"userName":$("#req_userName").val(),"userCode":$("#req_userCode").val(),"sex":getJqueryArrayStr("req_sex"),"userIdCard":"","treeId":$("#req_treeName").val(),"roleId":$("#req_roleName").val(),"userState":getJqueryArrayStr("req_userState")},
+			data: {"userId":$("#req_userId").val(),"loginName":$("#req_loginName").val(),"loginPswd":$("#req_loginPswd").val(),"userName":$("#req_userName").val(),"userCode":$("#req_userCode").val(),"sex":getJqueryArrayStr("req_sex"),"userIdCard":"","treeId":$("#req_treeName").val(),"roleId":$("#req_roleName").val(),"userState":getJqueryArrayStr("req_userState"),"roleType":$("#roleType").val()},
 			success:function(res){
 				if(res != null)
 				{
@@ -155,6 +155,16 @@ jQuery(function($) {
 					$('#req_userCode').val(res.retObj.userCode);
 					toSelected('req_treeName', res.retObj.treeId);
 					toSelected('req_roleName', res.retObj.roleId);
+					$('#roleType').val(res.retObj.roleType);
+					if(res.retObj.roleType=='0') {
+						$('#treeLi').css('display', 'none');
+						$('#roleLi').css('display', 'none');
+						$('#roleTypeVal').html('交管局领导');
+					} else {
+						$('#treeLi').css('display', 'block');
+						$('#roleLi').css('display', 'block');
+						$('#roleTypeVal').html('普通帐号');
+					}
 					
 					$.weeboxs.open('#userSaveOrUpdateDiv', {title:dialogTitle, contentType:'selector', width:'600', height:'430'});
 					toChecked('req_sex', res.retObj.sex);

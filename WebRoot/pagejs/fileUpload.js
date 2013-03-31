@@ -7,7 +7,7 @@ function setDefaultVal(editId,editName)
 }
 
 var setupUrl = contextPath()+"/downloads/md_1.0.0.5.CAB";//安装插件的链接地址
-var nowVersion = "1.0.0.3";//当前使用的版本号
+var nowVersion = "1.0.0.5";//当前使用的版本号
 var static_selectLetter = "";//当前上传的盘符
 var static_sum = 0;//总共的上传文件数量
 var static_uploaded = 0;//已经上传的文件数量

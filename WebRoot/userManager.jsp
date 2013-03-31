@@ -163,7 +163,12 @@ jQuery(function($) {
 							<div class="new_form">
 								<ul class="form_list">
 									<li class="form_item">
-										<label class="input_hd">登录帐户:</label>
+										<label class="input_hd">角色类型:</label>
+										<input type="hidden" class="input_130x20" id="roleType" name="roleType" value="" />
+										<span id="roleTypeVal"></span>
+									</li>
+									<li class="form_item">
+										<label class="input_hd">登录帐号:</label>
 										<input type="text" class="input_130x20" id="req_loginName" name="loginName" value="" />
 									</li>
 									<li class="form_item">
@@ -180,7 +185,7 @@ jQuery(function($) {
 										<input type="radio" class="req_sex" name="sex" value="W" />女
 										
 									</li>
-									<li class="form_item">
+									<li class="form_item" id="treeLi">
 										<label class="input_hd">所属部门:</label>
 										<select id="req_treeName" class="input_130x20">
 											<option value=""> -- </option>
@@ -205,7 +210,7 @@ jQuery(function($) {
 %>
 										</select>
 									</li>
-									<li class="form_item">
+									<li class="form_item" id="roleLi">
 										<label class="input_hd">所属角色:</label>
 										<select id="req_roleName" class="input_130x20">
 											<option value=""> -- </option>

@@ -172,12 +172,12 @@ textarea { overflow:auto; resize:none;}
 .log_table .hoverbg{ background:url(../images/filtertd.png) repeat-x 0 bottom;}
 /*上传文件查询*/
 .upload_file .content_hd{ padding-left:20px; width:866px;}
-.upload_img{ width:160px; height:160px; border:1px solid #c9c9c7; padding:1px;}
+.upload_img{ width:60px; height:60px; border:1px solid #c9c9c7; padding:1px;}
 .upload_list{ font-size:0px; margin-left:-24px;}
-.upload_list .upload_item{ font-size:12px; display:inline-block;*display:inline;*zoom:1; width:164px; margin-left:30px; color:#000100; padding-bottom:38px;}
+.upload_list .upload_item{ font-size:12px; display:inline-block;*display:inline;*zoom:1; width:94px; margin-left:30px; color:#000100; padding-bottom:38px;}
 .upload_list .upload_item_{ font-size:12px; display:inline-block;*display:inline;*zoom:1; width:114px; margin-left:30px; color:#000100; padding-bottom:38px;}
 .upload_descript{ padding:10px; margin-top:1px; line-height:16px; background-color:#eff0f2;}
-.upload_opterdetails{ padding:10px 0px 10px 10px; border:1px solid #eff0f2}
+.upload_opterdetails{ padding:10px 0px 10px 10px; border:1px solid #eff0f2; font: 11px/11px Verdana, Geneva, sans-serif}
 .upload_opterdetails li{ padding-bottom:10px;}
 .cancle,.cancle:link,.cancle:visited{ padding:2px 0px 2px 20px; background:url(../images/yel_star.png) no-repeat 0 0; color:#2084b8;}
 .add,.add:link,.add:visited{ padding:2px 0px 2px 20px; background:url(../images/add_star.png) no-repeat 0 0; color:#2084b8;}
@@ -634,3 +634,5 @@ div.information {
 }
 
 .label_1{ font:normal normal 14px/16px "宋体"; color:#333; width:640px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+
+.treelabel{ color:#666; display:inline-block; line-height:19px; padding-right:10px;}
