@@ -324,6 +324,90 @@ public class FrameUploadDAO extends BaseHibernateDAO {
 	}
 
 	@SuppressWarnings({ "finally", "unchecked" })
+	public Page uploadManagerQuery(String uploadName, String treeId,
+			String beginTime, String endTime, String uploadUserId,
+			String fileCreateUserId, String fileStats, String fileRemark,
+			Page page) {
+		Session session = getSession();
+		try {
+			session.clear();
+			StringBuffer queryString = new StringBuffer("from FrameUpload as model");
+			queryString.append(" where model.fileState = 'A'");
+			if(treeId.equals("")) {
+			} else {
+				queryString.append(" and model.tree2Id = ?");
+			}
+			if(beginTime.equals("") || beginTime.equals("")) {
+
+			} else {
+				queryString.append(" and model.uploadTime >=? and model.uploadTime <=?");
+			}
+			if(!uploadUserId.equals("")) {
+				queryString.append(" and model.userId = ?");
+			}
+			if(!fileCreateUserId.equals("")) {
+				queryString.append(" and model.editId = ?");
+			}
+			if(!fileStats.equals("")) {
+				queryString.append(" and model.fileStats = ?");
+			}
+			if(!fileRemark.equals("")) {
+				queryString.append(" and model.fileRemark like ?");
+			}
+			if(!uploadName.equals("")) {
+				queryString.append(" and model.uploadName like ?");
+			}
+			queryString.append(" and (model.fileState!='F' or model.fileState!='U')");
+			queryString.append(" order by model.uploadId desc");
+			Query queryObject = session.createQuery(queryString.toString());
+			int parameterIndex = 0;
+			if(treeId.equals("")) {
+			} else {
+				queryObject.setParameter(parameterIndex++, new Long(treeId));
+			}
+			if(beginTime.equals("") || endTime.equals("")) {
+
+			} else {
+				queryObject.setParameter(parameterIndex++, beginTime);
+				queryObject.setParameter(parameterIndex++, endTime);
+			}
+			if(!uploadUserId.equals("")) {
+				queryObject.setParameter(parameterIndex++, new Long(uploadUserId));
+			}
+			if(!fileCreateUserId.equals("")) {
+				queryObject.setParameter(parameterIndex++, new Long(fileCreateUserId));
+			}
+			if(!fileStats.equals("")) {
+				queryObject.setParameter(parameterIndex++, fileStats);
+			}
+			if(!fileRemark.equals("")) {
+				queryObject.setParameter(parameterIndex++, "%"+fileRemark+"%");
+			}
+			if(!uploadName.equals("")) {
+				queryObject.setParameter(parameterIndex++, "%"+uploadName+"%");
+			}
+			page.setTotal(queryObject.list().size());
+			queryObject.setFirstResult((page.getPageCute()-1)*page.getDbLine());
+			queryObject.setMaxResults(page.getDbLine());
+			List<UploadForm> uploadList = null;
+			List querylist = queryObject.list();
+			if(querylist!=null && querylist.size()>0) {
+				uploadList = new ArrayList<UploadForm>();
+				for(Object obj: querylist) {
+					uploadList.add(setUploadFormByFrameUpload(new UploadForm(), (FrameUpload)obj));
+				}
+			}
+			page.setListObject(uploadList);
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+//			throw re;
+		} finally {
+			session.close();
+			return page;
+		}
+	}
+
+	@SuppressWarnings({ "finally", "unchecked" })
 	public Page uploadListByTree(String uploadName, String treeId, String parentTreeId,
 			String beginTime, String endTime, String uploadUserId,
 			String fileCreateUserId, String fileStats, String fileRemark,

@@ -1,5 +1,7 @@
 package com.manager.pub.util;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ public class AVItoFormat {
 	 * @param imgfilepath
 	 * @return
 	 */
-	public static boolean makeImgbyMP4(String ffmpegpath,
+	public static boolean ___makeImgbyMP4(String ffmpegpath,
 			String videofilepath, String imgfilepath) {
 		System.out.println(videofilepath + "->" + imgfilepath);
 		List<String> commend = new java.util.ArrayList<String>();
@@ -37,6 +39,44 @@ public class AVItoFormat {
 			ProcessBuilder builder = new ProcessBuilder();
 			builder.command(commend);
 			builder.start();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+		}
+	}
+	public static boolean makeImgbyMP4(String ffmpegpath,
+			String videofilepath, String imgfilepath) {
+		System.out.println(videofilepath + "->" + imgfilepath);
+		List<String> commend = new java.util.ArrayList<String>();
+		commend.add(ffmpegpath);
+		commend.add("-i");
+		commend.add(videofilepath);
+		commend.add("-y");
+		commend.add("-f");
+		commend.add("image2");
+		commend.add("-ss");
+		commend.add("1");
+		commend.add("-qscale");
+		commend.add("1");
+		commend.add("-s");
+		commend.add("640*360");
+		commend.add("-vframes");
+		commend.add("1");
+		commend.add(imgfilepath);
+		try {
+			ProcessBuilder builder = new ProcessBuilder();
+			builder.command(commend);
+			builder.redirectErrorStream(true);
+			Process p = builder.start();
+			p.getOutputStream().close();
+			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			String tmp = null;
+			while ((tmp = br.readLine()) != null) {
+				System.out.println(tmp);
+			}
+			int exitValue = p.waitFor();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

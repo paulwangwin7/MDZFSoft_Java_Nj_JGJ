@@ -73,5 +73,10 @@
                 <comment>状态：A-有效；U-无效</comment>
             </column>
         </property>
+        <property name="roleType" type="java.lang.Long">
+            <column name="ROLE_TYPE" precision="1" scale="0">
+                <comment>0-管理员角色</comment>
+            </column>
+        </property>
     </class>
 </hibernate-mapping>

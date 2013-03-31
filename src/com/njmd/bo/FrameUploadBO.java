@@ -81,6 +81,27 @@ public interface FrameUploadBO {
 	 * 
 	 * @param uploadName		文件名 模糊查询
 	 * @param treeId			部门id
+	 * @param beginTime			查询开始时间
+	 * @param endTime			查询截止时间
+	 * @param uploadUserId		文件上传人
+	 * @param fileCreateUserId	采集人
+	 * @param fileStats			文件重要性 1-重要
+	 * @param fileRemark		备注说明
+	 * @param page
+	 * 			pagecute 当前页 默认第1页
+	 *			pageline 每页行数 默认10行
+	 * @return
+	 */
+	public Page uploadManagerQuery(String uploadName, String treeId,
+								String beginTime, String endTime, String uploadUserId,
+								String fileCreateUserId, String fileStats, String fileRemark,
+								Page page);
+
+	/**
+	 * 文件查询
+	 * 
+	 * @param uploadName		文件名 模糊查询
+	 * @param treeId			部门id
 	 * @param parentTreeId		上级部门id
 	 * @param beginTime			查询开始时间
 	 * @param endTime			查询截止时间

@@ -208,11 +208,12 @@ public class UserAction extends DispatchAction {
 				UserForm uf = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
 				UserForm userForm = new UserForm();
 				userForm.setTreeId(uf.getTreeId());
-				userForm.setUserName(request.getParameter("userNameStr"));
-				userForm.setUserCode(request.getParameter("userCodeStr"));
+				userForm.setUserName(request.getParameter("userNameStr")==null?"":request.getParameter("userNameStr"));
+				userForm.setUserCode(request.getParameter("userCodeStr")==null?"":request.getParameter("userCodeStr"));
 				String queryTreeId = request.getParameter("query_treeId")==null?"":request.getParameter("query_treeId");
 				if(uf.getUserId()==0) {
-					request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserList(new Page(pagecute, 10)));
+					//request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserList(new Page(pagecute, 10)));
+					request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserListByAdmin(userForm, queryTreeId, new Page(pagecute, 10)));
 				} else {
 					request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserList(userForm, queryTreeId, new Page(pagecute, 10)));
 				}
@@ -330,6 +331,31 @@ public class UserAction extends DispatchAction {
 			request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserList(userForm, queryTreeId, new Page(pagecute, 5)));
 		}
 		return mapping.findForward("userSelect");
+	}
+
+	/**
+	 * 用户 -- 选择用户列表
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ActionForward userChoose(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		String pageCute = request.getParameter("pageCute")==null?"":request.getParameter("pageCute");
+		int pagecute = 1;
+		try
+		{
+			pagecute = Integer.parseInt(pageCute);
+		}
+		catch(Exception ex)
+		{
+			pagecute = 1;
+		}
+		Long queryTreeId = new Long(request.getParameter("query_treeId"));
+		request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserListByTree(queryTreeId, new Page(pagecute, 5)));
+		return mapping.findForward("userChoose");
 	}
 
 	/**
@@ -542,7 +568,7 @@ public class UserAction extends DispatchAction {
 
 
 	/**
-	 * 文件管理 -- 文件查看
+	 * 文件管理 -- 文件查看（部门展示）
 	 * @param mapping
 	 * @param form
 	 * @param request
@@ -562,13 +588,41 @@ public class UserAction extends DispatchAction {
 		if(uploadSuccess)
 		{
 			UserForm userForm = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
-			if(userForm.getUserId()==0) {
+			if(userForm.getUserId()==0 || userForm.getRoleType().equals("0")) {
 				request.setAttribute("tree_root_list", sysDAO.remarkFormList("FRAME_TREE"));
 				request.setAttribute(Constants.JSP_TREE_LIST, frameTreeBO.getTreeList());
 			} else {
 				request.setAttribute("tree_root_list", sysDAO.remarkFormList("FRAME_TREE"));
 				request.setAttribute(Constants.JSP_TREE_LIST, frameTreeBO.getTreeListByTreeId(userForm.getTreeId(), request));
 			}
+			return mapping.findForward("uploadFileShow");
+		}
+		request.setAttribute(Constants.JSP_MESSAGE, informationFrameForm);
+		return mapping.findForward(frame_information);
+	}
+
+
+	/**
+	 * 文件管理 -- 文件查看
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ActionForward uploadManager(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		boolean uploadSuccess = false;
+		switch(userAction(request, "8"))// 0-正常运行操作 1-用户登录已超时 2-用户不在此权限范围
+		{
+			case 0: uploadSuccess = true;break;
+			case 1 : informationFrameForm = new InformationFrameForm("尊敬的用户，您登录已超时，请刷新后重新登录~","","1","wjck","文件查看");break;
+			case 2 : informationFrameForm = new InformationFrameForm("尊敬的用户，您不具备此权限范围~","","1","wjck","文件查看");break;
+			default : informationFrameForm = new InformationFrameForm("添加失败 系统超时~","","1","wjck","文件查看");
+		}
+		if(uploadSuccess)
+		{
+			UserForm userForm = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
 			TreeForm tree = new TreeForm();
 			tree.setTreeId(userForm.getTreeId());
 			tree = frameTreeBO.parentTreeDetail(tree);
@@ -580,7 +634,8 @@ public class UserAction extends DispatchAction {
 			String uploadName = request.getParameter("uploadName")==null?"":request.getParameter("uploadName");
 			String pageCute = request.getParameter("pageCute")==null?"":request.getParameter("pageCute");
 			String uploadUserId = request.getParameter("uploadUserId")==null?"":request.getParameter("uploadUserId");
-			String fileCreateUserId = request.getParameter("fileCreateUserId")==null?"":request.getParameter("fileCreateUserId");
+			String fileCreateUserId = request.getParameter("fileCreateUserId")==null?"":request.getParameter("fileCreateUserId");//采集人
+			String treeId = request.getParameter("treeId")==null?"":request.getParameter("treeId");
 			int pagecute = 1;
 			try
 			{
@@ -597,20 +652,23 @@ public class UserAction extends DispatchAction {
 					endTime = endTime.replace("-", "").replace(" ", "").replace(":", "");
 				}
 				if(userForm.getUserId()==0) {
-					request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByAdmin(uploadName, "", "", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
-					return mapping.findForward("uploadFileShow");
+					//request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByAdmin(uploadName, "", "", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
+					request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
+					return mapping.findForward("uploadManager");
 				} else {
 					if(parentTreeId!=-1)
 					{
 						if(parentTreeId==0){
 							parentTreeId = userForm.getTreeId();
 						}
-						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByTree(uploadName, userForm.getTreeId()+"", parentTreeId+"", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
-						return mapping.findForward("uploadFileShow");
+//						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByTree(uploadName, userForm.getTreeId()+"", parentTreeId+"", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
+						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
+						return mapping.findForward("uploadManager");
 					}
 					else {
-						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByAdmin(uploadName, "", "", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
-						return mapping.findForward("uploadFileShow");
+//						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByAdmin(uploadName, "", "", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
+						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
+						return mapping.findForward("uploadManager");
 					}
 				}
 			}

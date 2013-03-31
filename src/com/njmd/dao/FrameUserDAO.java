@@ -44,6 +44,7 @@ public class FrameUserDAO extends BaseHibernateDAO {
 	public static final String ROLE_ID = "roleId";
 	public static final String CREATE_TIME = "createTime";
 	public static final String USER_STATE = "userState";
+	public static final String ROLE_TYPE = "roleType";
 
 	@SuppressWarnings("finally")
 	public int save(FrameUser transientInstance) {
@@ -204,6 +205,11 @@ public class FrameUserDAO extends BaseHibernateDAO {
 		return findByProperty(USER_STATE, userState);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List findByRoleType(Object roleType) {
+		return findByProperty(ROLE_TYPE, roleType);
+	}
+
 	@SuppressWarnings({ "finally", "unchecked" })
 	public List findAll() {
 		List list = null;
@@ -359,6 +365,53 @@ public class FrameUserDAO extends BaseHibernateDAO {
 					FrameUser frameUser = (FrameUser)(obj[0]);
 					FrameTree frameTree = (FrameTree)(obj[1]);
 					FrameRole frameRole = (FrameRole)(obj[2]);
+					userList.add(setUserForm(frameUser, frameTree, frameRole));
+				}
+			}
+			page.setListObject(userList);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+//			throw re;
+		} finally {
+			session.close();
+			return page;
+		}
+	}
+
+	@SuppressWarnings({ "finally", "unchecked" })
+	public Page getUserListByAdmin(FrameUser instance, String queryTreeId, Page page) {
+		Session session = getSession();
+		try {
+			session.clear();
+			StringBuffer queryString = new StringBuffer("from FrameUser as model where model.userName like ? and model.userCode like ?");
+			if(!queryTreeId.equals(""))
+			{
+				queryString.append(" and treeId = ?");
+			}
+			queryString.append(" order by model.createTime desc");
+			Query queryObject = session.createQuery(queryString.toString());
+			queryObject.setParameter(0, "%"+instance.getUserName()+"%");
+			queryObject.setParameter(1, "%"+instance.getUserCode()+"%");
+			if(!queryTreeId.equals(""))
+			{
+				queryObject.setParameter(2, new Long(queryTreeId));
+			}
+			page.setTotal(queryObject.list().size());
+			queryObject.setFirstResult((page.getPageCute()-1)*page.getDbLine());
+			queryObject.setMaxResults(page.getDbLine());
+			List<UserForm> userList = new ArrayList<UserForm>();
+			List querylist = queryObject.list();
+			if(querylist!=null && querylist.size()>0) {
+				for(int i=0; i<querylist.size(); i++) {
+					FrameUser frameUser = (FrameUser)(querylist.get(i));
+					FrameTree frameTree = null;
+					if(frameUser.getTreeId()!=0) {
+						frameTree = frameTreeById(frameUser.getTreeId());
+					}
+					FrameRole frameRole = null;
+					if(frameUser.getRoleId()!=0) {
+						frameRole = frameRoleById(frameUser.getRoleId());
+					}
 	//				UserForm userForm = new UserForm();
 	//				userForm.setUserId(frameUser.getUserId());
 	//				userForm.setLoginName(frameUser.getLoginName());
@@ -435,9 +488,42 @@ public class FrameUserDAO extends BaseHibernateDAO {
 			return page;
 		}
 	}
+	@SuppressWarnings({ "finally", "unchecked" })
+	public Page findByTree(long treeId, Page page) {
+		Session session = getSession();
+		try {
+			session.clear();
+
+			StringBuffer queryString = new StringBuffer("select model,model2,model3 from FrameUser as model,FrameTree as model2,FrameRole as model3 where model.treeId=? and model.treeId=model2.treeId and model.roleId=model3.roleId");
+			queryString.append(" order by model.createTime desc");
+			Query queryObject = session.createQuery(queryString.toString());
+			queryObject.setParameter(0, treeId);
+			page.setTotal(queryObject.list().size());
+			queryObject.setFirstResult((page.getPageCute()-1)*page.getDbLine());
+			queryObject.setMaxResults(page.getDbLine());
+			List<UserForm> userList = new ArrayList<UserForm>();
+			List querylist = queryObject.list();
+			if(querylist!=null && querylist.size()>0) {
+				for(int i=0; i<querylist.size(); i++) {
+					Object[] obj = (Object[]) querylist.get(i);
+					FrameUser frameUser = (FrameUser)(obj[0]);
+					FrameTree frameTree = (FrameTree)(obj[1]);
+					FrameRole frameRole = (FrameRole)(obj[2]);
+					userList.add(setUserForm(frameUser, frameTree, frameRole));
+				}
+			}
+			page.setListObject(userList);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+//			throw re;
+		} finally {
+			session.close();
+			return page;
+		}
+	}
 
 	@SuppressWarnings({ "finally", "unchecked" })
-	public UserForm userLogin(FrameUser instance) {
+	public UserForm userLogin2(FrameUser instance) {
 		UserForm userForm = null;
 		Session session = getSession();
 		try {
@@ -453,6 +539,38 @@ public class FrameUserDAO extends BaseHibernateDAO {
 				FrameUser frameUser = (FrameUser)(obj[0]);
 				FrameTree frameTree = (FrameTree)(obj[1]);
 				FrameRole frameRole = (FrameRole)(obj[2]);
+				userForm = setUserForm(frameUser, frameTree, frameRole);
+			}
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+//			throw re;
+		} finally {
+			session.close();
+			return userForm;
+		}
+	}
+
+	@SuppressWarnings({ "finally", "unchecked" })
+	public UserForm userLogin(FrameUser instance) {
+		UserForm userForm = null;
+		Session session = getSession();
+		try {
+			session.clear();
+			StringBuffer queryString = new StringBuffer("from FrameUser as model where model.loginName = ? and model.loginPswd = ?");
+			Query queryObject = session.createQuery(queryString.toString());
+			queryObject.setParameter(0, instance.getLoginName());
+			queryObject.setParameter(1, instance.getLoginPswd());
+			List querylist = queryObject.list();
+			if(querylist!=null && querylist.size()>0) {
+				FrameUser frameUser = (FrameUser)(querylist.get(0));
+				FrameTree frameTree = null;
+				if(frameUser.getTreeId()!=0) {
+					frameTree = frameTreeById(frameUser.getTreeId());
+				}
+				FrameRole frameRole = null;
+				if(frameUser.getRoleId()!=0) {
+					frameRole = frameRoleById(frameUser.getRoleId());
+				}
 				userForm = setUserForm(frameUser, frameTree, frameRole);
 			}
 		} catch (RuntimeException re) {
@@ -514,6 +632,80 @@ public class FrameUserDAO extends BaseHibernateDAO {
 		}
 	}
 
+	@SuppressWarnings({ "finally", "unchecked" })
+	public FrameTree frameTreeById(Long treeId) {
+		FrameTree frameTree = null;
+		try {
+			if(treeId!=null) {
+				Session session = getSession();
+				session.clear();
+				String queryString = "from FrameTree as model where model.treeId = ?";
+				Query queryObject = session.createQuery(queryString);
+				queryObject.setParameter(0, treeId);
+				List list = queryObject.list();
+				if(list!=null && list.size()>0) {
+					frameTree = (FrameTree)list.get(0);
+				}
+			}
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+//			throw re;
+		} finally {
+//			session.close();
+			return frameTree;
+		}
+	}
+
+	@SuppressWarnings({ "finally", "unchecked" })
+	public FrameRole frameRoleById(Long roleId) {
+		FrameRole frameRole = null;
+		try {
+			if(roleId!=null) {
+				Session session = getSession();
+				session.clear();
+				String queryString = "from FrameRole as model where model.roleId = ?";
+				Query queryObject = session.createQuery(queryString);
+				queryObject.setParameter(0, roleId);
+				List list = queryObject.list();
+				if(list!=null && list.size()>0) {
+					frameRole = (FrameRole)list.get(0);
+				}
+			}
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+//			throw re;
+		} finally {
+//			session.close();
+			return frameRole;
+		}
+	}
+
+	@SuppressWarnings("finally")
+	public UserForm findDetailById(java.lang.Long id) {
+		UserForm userForm = null;
+		log.debug("getting FrameUser instance with id: " + id);
+		Session session = getSession();
+		try {
+			session.clear();
+			FrameUser frameUser = (FrameUser) session.get("com.njmd.pojo.FrameUser", id);
+			FrameTree frameTree = null;
+			if(frameUser.getTreeId()!=0) {
+				frameTree = frameTreeById(frameUser.getTreeId());
+			}
+			FrameRole frameRole = null;
+			if(frameUser.getRoleId()!=0) {
+				frameRole = frameRoleById(frameUser.getRoleId());
+			}
+			userForm = setUserForm(frameUser, frameTree, frameRole);
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+//			throw re;
+		} finally {
+			session.close();
+			return userForm;
+		}
+	}
+
 	private UserForm setUserForm(FrameUser frameUser, FrameTree frameTree, FrameRole frameRole) {
 		UserForm userForm = new UserForm();
 		userForm.setUserId(frameUser.getUserId());
@@ -529,8 +721,17 @@ public class FrameUserDAO extends BaseHibernateDAO {
 		userForm.setRoleId(frameUser.getRoleId());
 		userForm.setCreateTime(frameUser.getCreateTime());
 		userForm.setUserState(frameUser.getUserState());
-		userForm.setTreeNameStr(frameTree.getTreeName());
-		userForm.setRoleNameStr(frameRole.getRoleName());
+		if(frameTree!=null) {
+			userForm.setTreeNameStr(frameTree.getTreeName());
+		} else {
+			userForm.setTreeNameStr("交警总队");
+		}
+		if(frameRole!=null) {
+			userForm.setRoleNameStr(frameRole.getRoleName());
+		} else {
+			userForm.setRoleNameStr("交管局领导");
+		}
+		userForm.setRoleType(frameUser.getRoleType()==null?"":"0");
 		return userForm;
 	}
 

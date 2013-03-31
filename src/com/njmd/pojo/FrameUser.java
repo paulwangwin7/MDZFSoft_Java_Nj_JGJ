@@ -23,6 +23,7 @@ public class FrameUser implements java.io.Serializable {
 	private Long roleId;
 	private String createTime;
 	private String userState;
+	private Long roleType;
 
 	// Constructors
 
@@ -39,7 +40,7 @@ public class FrameUser implements java.io.Serializable {
 	public FrameUser(Long userId, String loginName, String loginPswd,
 			String userName, String userCode, String sex, String userIdcard,
 			Long cardTypeid, String cardCode, Long treeId, Long roleId,
-			String createTime, String userState) {
+			String createTime, String userState, Long roleType) {
 		this.userId = userId;
 		this.loginName = loginName;
 		this.loginPswd = loginPswd;
@@ -53,6 +54,7 @@ public class FrameUser implements java.io.Serializable {
 		this.roleId = roleId;
 		this.createTime = createTime;
 		this.userState = userState;
+		this.roleType = roleType;
 	}
 
 	// Property accessors
@@ -159,6 +161,14 @@ public class FrameUser implements java.io.Serializable {
 
 	public void setUserState(String userState) {
 		this.userState = userState;
+	}
+
+	public Long getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(Long roleType) {
+		this.roleType = roleType;
 	}
 
 }

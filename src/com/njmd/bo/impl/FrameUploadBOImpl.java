@@ -37,6 +37,13 @@ public class FrameUploadBOImpl implements FrameUploadBO {
 		return frameUploadDAO.uploadDetail(uploadId);
 	}
 
+	public Page uploadManagerQuery(String uploadName, String treeId,
+			String beginTime, String endTime, String uploadUserId,
+			String fileCreateUserId, String fileStats, String fileRemark, Page page) {
+		// TODO Auto-generated method stub
+		return frameUploadDAO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, page);
+	}
+
 	public Page uploadListByTree(String uploadName, String treeId,
 			String parentTreeId, String beginTime, String endTime,
 			String uploadUserId, String fileCreateUserId, String fileStats,

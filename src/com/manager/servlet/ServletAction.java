@@ -87,17 +87,28 @@ public class ServletAction extends DispatchAction{
 				//--step3 判断用户状态是否正常
 				if(userForm.getUserState().equals("A"))//用户状态正常
 				{
-					RoleForm role = new RoleForm();
-					role.setRoleId(userForm.getRoleId());
-					RoleForm roleForm = frameRoleBO.roleDetail(role);
-					// 333
-//					List list_urlForm = userDAO.queryMenuAndUrlByRoleId(roleForm.getUrlIdList().split(","));
-					
-					request.getSession().setAttribute(Constants.SESSION_USER_FORM, userForm);//将该用户的userForm信息保存在session中
-					request.getSession().setAttribute(Constants.SESSION_ROLE_FORM, roleForm);//将该用户的roleForm信息保存在session中
-					request.getSession().setAttribute(Constants.SESSION_URL_LIST, frameMenuBO.queryMenuAndUrlByUrlIds(roleForm.getUrlIdList().split(",")));//将该用户的urlList信息保存在session中
-					result.setMsg("登录成功~");
-					userLog(request, "用户登录");
+					if(userForm.getRoleType().equals("")) {//普通用户
+						RoleForm role = new RoleForm();
+						role.setRoleId(userForm.getRoleId());
+						RoleForm roleForm = frameRoleBO.roleDetail(role);
+						// 333
+	//					List list_urlForm = userDAO.queryMenuAndUrlByRoleId(roleForm.getUrlIdList().split(","));
+						
+						request.getSession().setAttribute(Constants.SESSION_USER_FORM, userForm);//将该用户的userForm信息保存在session中
+						request.getSession().setAttribute(Constants.SESSION_ROLE_FORM, roleForm);//将该用户的roleForm信息保存在session中
+						request.getSession().setAttribute(Constants.SESSION_URL_LIST, frameMenuBO.queryMenuAndUrlByUrlIds(roleForm.getUrlIdList().split(",")));//将该用户的urlList信息保存在session中
+						result.setMsg("登录成功~");
+						userLog(request, "用户登录");
+					} else {//观察者
+						RoleForm roleForm = new RoleForm();
+						roleForm.setRoleName("交管局领导");
+						roleForm.setTreeId("0");
+						roleForm.setUrlIdList("6,7,8");
+						request.getSession().setAttribute(Constants.SESSION_ROLE_FORM, roleForm);//将该用户的roleForm信息保存在session中
+						request.getSession().setAttribute(Constants.SESSION_USER_FORM, userForm);//将该用户的userForm信息保存在session中
+						request.getSession().setAttribute(Constants.SESSION_URL_LIST, frameMenuBO.queryMenuAndUrlByUrlIds(roleForm.getUrlIdList().split(",")));//将该用户的urlList信息保存在session中
+						result.setMsg("登录成功~");
+					}
 				}
 				else//用户状态不正常 未激活或已被锁定
 				{
@@ -214,7 +225,7 @@ public class ServletAction extends DispatchAction{
 		{
 			UserForm user = new UserForm();
 			user.setUserId(new Long(userId));
-			result.setRetObj(frameUserBO.userDetail(user));
+			result.setRetObj(frameUserBO.userById(user));
 		}
 		request.setAttribute("jsonViewStr", getJsonView(result));
 		return mapping.findForward("servletResult");
@@ -712,10 +723,13 @@ public class ServletAction extends DispatchAction{
 		//userForm.setCard_typeId(Long.parseLong(request.getParameter("cardTypeId")));
 		userForm.setCard_typeId(0);//其他证件类型
 		userForm.setCardCode("");//其他证件编号
-		userForm.setTreeId(Long.parseLong(request.getParameter("treeId")));//所在部门id
-		userForm.setRoleId(Long.parseLong(request.getParameter("roleId")));//所属角色id
+		if(request.getParameter("roleType").equals("")) {
+			userForm.setTreeId(Long.parseLong(request.getParameter("treeId")));//所在部门id
+			userForm.setRoleId(Long.parseLong(request.getParameter("roleId")));//所属角色id
+		}
 		userForm.setCreateTime(DateUtils.getChar14());//创建时间
 		userForm.setUserState(request.getParameter("userState"));//用户状态
+		userForm.setRoleType(request.getParameter("roleType"));
 		switch(frameUserBO.userRegister(userForm))//0-注册成功；1-注册失败 系统超时~；2-注册失败 登录名称重复
 		{
 			case 0 : {
@@ -768,10 +782,15 @@ public class ServletAction extends DispatchAction{
 		userForm.setUserIdCard(request.getParameter("userIdCard"));
 		userForm.setCard_typeId(0);
 		userForm.setCardCode("");
-		userForm.setTreeId(Long.parseLong(request.getParameter("treeId")));
-		userForm.setRoleId(Long.parseLong(request.getParameter("roleId")));
+		if(!request.getParameter("treeId").equals("")) {
+			userForm.setTreeId(Long.parseLong(request.getParameter("treeId")));
+		}
+		if(!request.getParameter("roleId").equals("")) {
+			userForm.setRoleId(Long.parseLong(request.getParameter("roleId")));
+		}
 		userForm.setCreateTime(request.getParameter("createTime"));
 		userForm.setUserState(request.getParameter("userState"));
+		userForm.setRoleType(request.getParameter("roleType"));
 		switch(frameUserBO.userModify(userForm))//0-修改成功；1-修改失败 系统超时~；2-修改失败 登录名称重复
 		{
 			case 0 : {
@@ -841,7 +860,9 @@ public class ServletAction extends DispatchAction{
 			HttpServletRequest request, HttpServletResponse response) {
 		Result result = new Result();//返回结果
 
-		UserForm userForm = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
+		UserForm userForm = new UserForm();
+		userForm.setUserId(new Long(request.getParameter("userId")));
+		userForm = frameUserBO.userById(userForm);
 		String oldPswd = userForm.getLoginPswd();
 		userForm.setLoginPswd(SystemConfig.getSystemConfig().getResetPswd());
 		switch(frameUserBO.pswdModify(userForm, oldPswd))//0-修改成功；1-修改失败 系统超时~；2-修改失败 旧密码不正确

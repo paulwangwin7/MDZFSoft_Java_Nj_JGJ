@@ -30,9 +30,31 @@ public class FrameUserBOImpl implements FrameUserBO {
 		return frameUserDAO.getUserList(instance, queryTreeId, page);
 	}
 
+	public Page getUserListByAdmin(UserForm user, String queryTreeId, Page page) {
+		// TODO Auto-generated method stub
+		FrameUser instance = new FrameUser();
+		if(user.getUserName()!=null) {
+			instance.setUserName(user.getUserName());
+		}
+		if(user.getUserCode()!=null) {
+			instance.setUserCode(user.getUserCode());
+		}
+		if(user.getSex()!=null) {
+			instance.setSex(user.getSex());
+		}
+		if(user.getTreeId()>0) {
+			instance.setTreeId(user.getTreeId());
+		}
+		return frameUserDAO.getUserListByAdmin(instance, queryTreeId, page);
+	}
+
 	public Page getUserList(Page page) {
 		// TODO Auto-generated method stub
 		return frameUserDAO.getUserList(page);
+	}
+
+	public Page getUserListByTree(Long treeId, Page page) {
+		return frameUserDAO.findByTree(treeId, page);
 	}
 
 	public UserForm userLogin(UserForm user) {
@@ -64,6 +86,9 @@ public class FrameUserBOImpl implements FrameUserBO {
 			frameUser.setRoleId(userForm.getRoleId());
 			frameUser.setCreateTime(DateUtils.getChar14());
 			frameUser.setUserState(userForm.getUserState());
+			if(!userForm.getRoleType().equals("")) {
+				frameUser.setRoleType(new Long(userForm.getRoleType()));
+			}
 			registerResult = frameUserDAO.save(frameUser);
 		}
 		return registerResult;
@@ -89,6 +114,9 @@ public class FrameUserBOImpl implements FrameUserBO {
 			frameUser.setTreeId(userForm.getTreeId());
 			frameUser.setRoleId(userForm.getRoleId());
 			frameUser.setUserState(userForm.getUserState());
+			if(!userForm.getRoleType().equals("")) {
+				frameUser.setRoleType(new Long(userForm.getRoleType()));
+			}
 			modifyResult = frameUserDAO.attachDirty(frameUser);
 		}
 		return modifyResult;
@@ -115,6 +143,11 @@ public class FrameUserBOImpl implements FrameUserBO {
 	public UserForm userDetail(UserForm userForm) {
 		// TODO Auto-generated method stub
 		return frameUserDAO.userDetailById(userForm.getUserId());
+	}
+
+	public UserForm userById(UserForm userForm) {
+		// TODO Auto-generated method stub
+		return frameUserDAO.findDetailById(userForm.getUserId());
 	}
 
 	public void setFrameUserDAO(FrameUserDAO frameUserDAO) {

@@ -33,6 +33,8 @@ public class UserForm {
 	private String treeNameStr;//所属部门
 	@Expose
 	private String roleNameStr;//所属角色
+	@Expose
+	private String roleType;//角色类型 0-管理员
 
 	public UserForm(){}
 
@@ -129,5 +131,13 @@ public class UserForm {
 
 	public void setRoleNameStr(String roleNameStr) {
 		this.roleNameStr = roleNameStr;
+	}
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
 }

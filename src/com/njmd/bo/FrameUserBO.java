@@ -34,7 +34,32 @@ public interface FrameUserBO {
 	 *			pageline 每页多少条数据
 	 * @return Page
 	 */
+	public Page getUserListByAdmin(UserForm userForm, String queryTreeId, Page page);
+	/**
+	 * 查询用户列表
+	 * 
+	 * @param userForm 
+	 * 			userName 用户名 	 模糊查询
+	 * 			userCode 警员编号	 精准查询
+	 * 			sex 	 性别	 精准查询
+	 * 			treeId	 所属部门	 精准查询（并查询下属部门）
+	 * @param queryTreeId 需要查询的部门id
+	 * @param page
+	 *			pagecute 当前第几页
+	 *			pageline 每页多少条数据
+	 * @return Page
+	 */
 	public Page getUserList(Page page);
+	/**
+	 * 查询用户列表
+	 * 
+	 * @param treeId	 所属部门	 精准查询（并查询下属部门）
+	 * @param page
+	 *			pagecute 当前第几页
+	 *			pageline 每页多少条数据
+	 * @return Page
+	 */
+	public Page getUserListByTree(Long treeId, Page page);
 
 	/**
 	 * 用户登录
@@ -81,4 +106,13 @@ public interface FrameUserBO {
 	 * @return
 	 */
 	public UserForm userDetail(UserForm userForm);
+
+	/**
+	 * 用户详情
+	 * 
+	 * @param userForm
+	 * 			userId 		用户id
+	 * @return
+	 */
+	public UserForm userById(UserForm userForm);
 }
