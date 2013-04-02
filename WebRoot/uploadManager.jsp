@@ -92,7 +92,7 @@ $(document).ready(function(){
 						</div>
 					</TD>
 					<TD VALIGN="TOP">
-						<iframe src="" id="uploadManagerQuery" name="uploadManagerQuery" style="width:700px;height:800px;overflow:hidden" frameborder="0"></iframe>
+						<iframe src="" id="uploadManagerQuery" name="uploadManagerQuery" style="width:700px;height:800px;overflow-x:hidden" frameborder="0"></iframe>
 					</TD>
 					</TABLE>
 					</div>

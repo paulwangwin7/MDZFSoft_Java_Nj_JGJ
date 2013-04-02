@@ -325,9 +325,9 @@ public class FrameUploadDAO extends BaseHibernateDAO {
 
 	@SuppressWarnings({ "finally", "unchecked" })
 	public Page uploadManagerQuery(String uploadName, String treeId,
-			String beginTime, String endTime, String uploadUserId,
-			String fileCreateUserId, String fileStats, String fileRemark,
-			Page page) {
+			String beginTime, String endTime, String createTimeBegin, String createTimeEnd,
+			String uploadUserId, String fileCreateUserId, String fileStats,
+			String fileRemark, Page page) {
 		Session session = getSession();
 		try {
 			session.clear();
@@ -341,6 +341,11 @@ public class FrameUploadDAO extends BaseHibernateDAO {
 
 			} else {
 				queryString.append(" and model.uploadTime >=? and model.uploadTime <=?");
+			}
+			if(createTimeBegin.equals("") || createTimeEnd.equals("")) {
+
+			} else {
+				queryString.append(" and model.fileCreatetime >=? and model.fileCreatetime <=?");
 			}
 			if(!uploadUserId.equals("")) {
 				queryString.append(" and model.userId = ?");
@@ -370,6 +375,12 @@ public class FrameUploadDAO extends BaseHibernateDAO {
 			} else {
 				queryObject.setParameter(parameterIndex++, beginTime);
 				queryObject.setParameter(parameterIndex++, endTime);
+			}
+			if(createTimeBegin.equals("") || createTimeEnd.equals("")) {
+
+			} else {
+				queryObject.setParameter(parameterIndex++, createTimeBegin);
+				queryObject.setParameter(parameterIndex++, createTimeEnd);
 			}
 			if(!uploadUserId.equals("")) {
 				queryObject.setParameter(parameterIndex++, new Long(uploadUserId));

@@ -326,7 +326,8 @@ public class UserAction extends DispatchAction {
 		userForm.setUserCode(request.getParameter("user_code")==null?"":request.getParameter("user_code"));
 		String queryTreeId = request.getParameter("query_treeId")==null?"":request.getParameter("query_treeId");
 		if(uf.getUserId()==0) {
-			request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserList(new Page(pagecute, 5)));
+//			request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserList(new Page(pagecute, 5)));
+			request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserList(userForm, queryTreeId, new Page(pagecute, 5)));
 		} else {
 			request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserList(userForm, queryTreeId, new Page(pagecute, 5)));
 		}
@@ -353,8 +354,15 @@ public class UserAction extends DispatchAction {
 		{
 			pagecute = 1;
 		}
-		Long queryTreeId = new Long(request.getParameter("query_treeId"));
-		request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserListByTree(queryTreeId, new Page(pagecute, 5)));
+//		Long queryTreeId = new Long(request.getParameter("query_treeId"));
+//		request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserListByTree(queryTreeId, new Page(pagecute, 5)));
+		UserForm userForm = new UserForm();
+		UserForm uf = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
+		userForm.setTreeId(uf.getTreeId());
+		userForm.setUserName(request.getParameter("user_name")==null?"":request.getParameter("user_name"));
+		userForm.setUserCode(request.getParameter("user_code")==null?"":request.getParameter("user_code"));
+		String queryTreeId = request.getParameter("query_treeId")==null?"":request.getParameter("query_treeId");
+		request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserList(userForm, queryTreeId, new Page(pagecute, 5)));
 		return mapping.findForward("userChoose");
 	}
 
@@ -629,6 +637,8 @@ public class UserAction extends DispatchAction {
 			long parentTreeId = tree==null?new Long(0):tree.getTreeId();
 			String beginTime = request.getParameter("beginTime")==null?"":request.getParameter("beginTime");
 			String endTime = request.getParameter("endTime")==null?"":request.getParameter("endTime");
+			String createTimeBegin = request.getParameter("createTimeBegin")==null?"":request.getParameter("createTimeBegin");
+			String createTimeEnd = request.getParameter("createTimeEnd")==null?"":request.getParameter("createTimeEnd");
 			String fileStats = request.getParameter("fileStats")==null?"":request.getParameter("fileStats");
 			String fileRemark = request.getParameter("fileRemark")==null?"":request.getParameter("fileRemark");
 			String uploadName = request.getParameter("uploadName")==null?"":request.getParameter("uploadName");
@@ -651,9 +661,14 @@ public class UserAction extends DispatchAction {
 					beginTime = beginTime.replace("-", "").replace(" ", "").replace(":", "");
 					endTime = endTime.replace("-", "").replace(" ", "").replace(":", "");
 				}
+				if(!createTimeBegin.equals("") && !createTimeEnd.equals(""))
+				{
+					createTimeBegin = createTimeBegin.replace("-", "").replace(" ", "").replace(":", "");
+					createTimeEnd = createTimeEnd.replace("-", "").replace(" ", "").replace(":", "");
+				}
 				if(userForm.getUserId()==0) {
 					//request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByAdmin(uploadName, "", "", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
-					request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
+					request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, createTimeBegin, createTimeEnd, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 8)));
 					return mapping.findForward("uploadManager");
 				} else {
 					if(parentTreeId!=-1)
@@ -662,12 +677,12 @@ public class UserAction extends DispatchAction {
 							parentTreeId = userForm.getTreeId();
 						}
 //						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByTree(uploadName, userForm.getTreeId()+"", parentTreeId+"", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
-						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
+						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, createTimeBegin, createTimeEnd, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 8)));
 						return mapping.findForward("uploadManager");
 					}
 					else {
 //						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByAdmin(uploadName, "", "", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
-						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
+						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, createTimeBegin, createTimeEnd, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 8)));
 						return mapping.findForward("uploadManager");
 					}
 				}

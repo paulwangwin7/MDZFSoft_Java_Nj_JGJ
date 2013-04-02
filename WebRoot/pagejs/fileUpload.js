@@ -796,7 +796,7 @@ function getFileName()
 {
   var myDate = new Date();
   var yyyy = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
-  var MM = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
+  var MM = myDate.getMonth()+1; //获取当前月份(0-11,0代表1月)
   var dd = myDate.getDate(); //获取当前日(1-31)
   myDate.getDay(); //获取当前星期X(0-6,0代表星期天)
   myDate.getTime(); //获取当前时间(从1970.1.1开始的毫秒数)

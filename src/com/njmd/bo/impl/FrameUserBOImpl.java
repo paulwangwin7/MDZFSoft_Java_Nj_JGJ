@@ -24,7 +24,7 @@ public class FrameUserBOImpl implements FrameUserBO {
 		if(user.getSex()!=null) {
 			instance.setSex(user.getSex());
 		}
-		if(user.getTreeId()>0) {
+		if(user.getTreeId()>=0) {
 			instance.setTreeId(user.getTreeId());
 		}
 		return frameUserDAO.getUserList(instance, queryTreeId, page);

@@ -37,7 +37,7 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 							文件查看
 							</h5>
 							<div class="search_form">
-<form id="uploadManagerForm" action="<%=basePath %>userAction.do?method=filePlayShow" onsubmit="return uploadManagerFormSubmit()" method="post">
+<form id="uploadManagerForm" action="<%=basePath %>userAction.do?method=uploadManager" onsubmit="return uploadManagerFormSubmit()" method="post">
 <input type="hidden" name="uploadUserId" id="upload_userId" value="<%=request.getParameter("uploadUserId")==null?"":request.getParameter("uploadUserId") %>" />
 <input type="hidden" name="fileCreateUserId" id="upload_editId" value="<%=request.getParameter("fileCreateUserId")==null?"":request.getParameter("fileCreateUserId") %>" />
 								<div class="mt_10">
@@ -45,6 +45,9 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 									<input type="text" class="input_186x19" name="uploadName" id="uploadName" value="<%=request.getParameter("uploadName")==null?"":request.getParameter("uploadName") %>" />&nbsp;&nbsp;&nbsp;&nbsp;
 								<label>文件备注:</label><input class="input_186x19" type="text" name="fileRemark" value="<%=request.getParameter("fileRemark")==null?"":request.getParameter("fileRemark") %>" /><br/><br/>
 								<label>上传时间:</label><input class="input_186x19" id="beginTime" type="text" name="beginTime" value="<%=request.getParameter("beginTime")==null?"":request.getParameter("beginTime") %>" onclick="SelectDate(this,'yyyy-MM-dd hh:mm:ss')" readonly />&nbsp;&nbsp;-&nbsp;&nbsp;<input type="text" id="endTime" class="input_186x19" name="endTime" value="<%=request.getParameter("endTime")==null?"":request.getParameter("endTime") %>" onclick="SelectDate(this,'yyyy-MM-dd hh:mm:ss')" readonly />
+								</div>
+								<div class="mt_10">
+								<label>录制时间:</label><input class="input_186x19" id="createTimeBegin" type="text" name="createTimeBegin" value="<%=request.getParameter("createTimeBegin")==null?"":request.getParameter("createTimeBegin") %>" onclick="SelectDate(this,'yyyy-MM-dd hh:mm:ss')" readonly />&nbsp;&nbsp;-&nbsp;&nbsp;<input type="text" id="createTimeEnd" class="input_186x19" name="createTimeEnd" value="<%=request.getParameter("createTimeEnd")==null?"":request.getParameter("createTimeEnd") %>" onclick="SelectDate(this,'yyyy-MM-dd hh:mm:ss')" readonly />
 								</div>
 								<div class="mt_10">
 								<label>文件重要性:</label>
@@ -77,7 +80,7 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 												{
 										%>
 										<a href="javascript:parent.imageDialogShow('<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getPlayPath() %>','','查看图片');" >
-										<img src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="100px" height="100px" />
+										<img src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="160px" height="160px" />
 										</a>
 										<%
 												}
@@ -89,7 +92,7 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 										<%
 													}
 										%>
-										<img title="<%=uploadForm.getFileRemark()==null?"":uploadForm.getFileRemark() %>" src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="100px" height="100px" />
+										<img title="<%=uploadForm.getFileRemark()==null?"":uploadForm.getFileRemark() %>" src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="160px" height="160px" />
 										<%
 													if(uploadForm.getFileState().equals("A")) {
 										%>
@@ -105,7 +108,7 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 										<%
 													}
 										%>
-										<img title="<%=uploadForm.getFileRemark()==null?"":uploadForm.getFileRemark() %>" src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="100px" height="100px" />
+										<img title="<%=uploadForm.getFileRemark()==null?"":uploadForm.getFileRemark() %>" src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="160px" height="160px" />
 										<%
 													if(uploadForm.getFileState().equals("A")) {
 										%>
@@ -116,22 +119,19 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 											}
 										%>
 									</div>
-									<div title="<%=uploadForm.getUploadName() %>" class="upload_descript" style="width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+									<div title="<%=uploadForm.getUploadName() %>" class="upload_descript" style="width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
 										<%=uploadForm.getUploadName() %>
 									</div>
 									<div class="upload_opterdetails">
 										<ul>
 											<li>
-												<span class="hd">创建时间：</span>
-												<span class="bd"><%=Constants.timeFormat(uploadForm.getFileCreatetime(), "1").substring(2,16) %></span>
+												<span class="hd">创建时间：<br/>&nbsp;&nbsp;<%=Constants.timeFormat(uploadForm.getFileCreatetime(), "1").substring(2,16) %></span>
 											</li>
 											<li>
-												<span class="hd">上传时间：</span>
-												<span class="bd"><%=Constants.timeFormat(uploadForm.getUploadTime(), "1").substring(2,16) %></span>
+												<span class="hd">上传时间：<br/>&nbsp;&nbsp;<%=Constants.timeFormat(uploadForm.getUploadTime(), "1").substring(2,16) %></span>
 											</li>
 											<li>
-												<span class="hd">使 用 人：</span>
-												<span class="bd"><%=uploadForm.getEditName() %></span>
+												<span class="hd">使 用 人：</span><span class="bd"><%=uploadForm.getEditName() %></span>
 											</li>
 										</ul>
 									</div>
@@ -198,6 +198,8 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 <input type="hidden" name="fileStats" value="<%=fileStatsVal %>" />
 <input type="hidden" name="treeId" value="<%=request.getParameter("treeId")==null?"":request.getParameter("treeId") %>" />
 <input type="hidden" name="treeName" value="<%=request.getParameter("treeName")==null?"":request.getParameter("treeName") %>" />
+<input type="hidden" name="createTimeBegin" value="<%=request.getParameter("createTimeBegin")==null?"":request.getParameter("createTimeBegin") %>" />
+<input type="hidden" name="createTimeEnd" value="<%=request.getParameter("createTimeEnd")==null?"":request.getParameter("createTimeEnd") %>" />
 </form>
 <script>
 function showUpload(pageCute)
@@ -209,30 +211,4 @@ function showUpload(pageCute)
 							<table align="center"><tr><td><jsp:include page="common/page.jsp?function=showUpload"></jsp:include></td></tr></table>
 						</div><br/>
 					</div>
-<script>
-/**
- * 用户选择
- * @param assignmentId 
- * @param assignmentName 
- * @param dialogTitle 弹出层的标题
- */
-function userChoose(assignmentId, assignmentName, dialogTitle, onlyRoot)
-{
-jQuery(function($) {
-	$.weeboxs.open('#userChooseDiv', {title:dialogTitle, contentType:'selector', width:'600', height:'450'});
-	if(assignmentId!=null)
-	{
-		$('#changeUser').val('0');
-	}
-	else
-	{
-		$('#changeUser').val('');
-	}
-});
-}
-function closeDialog()
-{
-	$('#closeDialog').click();
-}
-</script>
 </html>
