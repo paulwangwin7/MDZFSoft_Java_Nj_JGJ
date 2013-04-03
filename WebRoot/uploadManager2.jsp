@@ -207,6 +207,24 @@ function showUpload(pageCute)
 	$('#uploadManager_pageCute').val(pageCute);
 	$('#hidUploadForm').submit();
 }
+function uploadManagerFormSubmit() {
+	var beginTimeVal = document.getElementById('beginTime').value;
+	var endTimeVal = document.getElementById('endTime').value;
+	var createBeginVal = document.getElementById('createTimeBegin').value;
+	var createEndVal = document.getElementById('createTimeEnd').value;
+	if(beginTimeVal=='' && endTimeVal!='') {
+		alert("上传日期错误，请选择起始时间或清除结束时间！");
+	}else if(beginTimeVal!='' && endTimeVal=='') {
+		alert("上传日期错误，请选择结束时间或清除起始时间！");
+	} else if(createBeginVal=='' && createEndVal!='') {
+		alert("录制时间错误，请选择起始时间或清除结束时间！");
+	} else if(createBeginVal!='' && createEndVal=='') {
+		alert("录制时间错误，请选择结束时间或清除起始时间！");
+	} else {
+		return true;
+	}
+	return false;
+}
 </script>
 							<table align="center"><tr><td><jsp:include page="common/page.jsp?function=showUpload"></jsp:include></td></tr></table>
 						</div><br/>
