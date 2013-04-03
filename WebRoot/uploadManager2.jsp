@@ -80,7 +80,7 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 												{
 										%>
 										<a href="javascript:parent.imageDialogShow('<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getPlayPath() %>','','查看图片');" >
-										<img src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="160px" height="160px" />
+										<img src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="150px" height="150px" />
 										</a>
 										<%
 												}
@@ -92,7 +92,7 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 										<%
 													}
 										%>
-										<img title="<%=uploadForm.getFileRemark()==null?"":uploadForm.getFileRemark() %>" src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="160px" height="160px" />
+										<img title="<%=uploadForm.getFileRemark()==null?"":uploadForm.getFileRemark() %>" src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="150px" height="150px" />
 										<%
 													if(uploadForm.getFileState().equals("A")) {
 										%>
@@ -108,7 +108,7 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 										<%
 													}
 										%>
-										<img title="<%=uploadForm.getFileRemark()==null?"":uploadForm.getFileRemark() %>" src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="160px" height="160px" />
+										<img title="<%=uploadForm.getFileRemark()==null?"":uploadForm.getFileRemark() %>" src="<%=uploadForm.getFileSavePath()+"/upload/files/"+uploadForm.getShowPath() %>" alt="" width="150px" height="150px" />
 										<%
 													if(uploadForm.getFileState().equals("A")) {
 										%>
@@ -119,7 +119,7 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 											}
 										%>
 									</div>
-									<div title="<%=uploadForm.getUploadName() %>" class="upload_descript" style="width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+									<div title="<%=uploadForm.getUploadName() %>" class="upload_descript" style="width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
 										<%=uploadForm.getUploadName() %>
 									</div>
 									<div class="upload_opterdetails">

@@ -332,7 +332,7 @@ function showFrame(frameIndex)
 	showObj('frame_'+frameIndex);
 }
 </script>
-<iframe id="frame_1" name="rootTree" src="" width="916px" height="410px" frameborder="0" scrolling="no"></iframe>
+<iframe id="frame_1" name="rootTree" src="" width="916px" height="610px" frameborder="0" scrolling="no"></iframe>
 <iframe style="display:none" id="frame_2" name="childTree" src="" width="916px" height="410px" frameborder="0" scrolling="no"></iframe>
 <iframe style="display:none" id="frame_3" name="personal" src="" width="916px" height="410px" frameborder="0" scrolling="no"></iframe>
 						<div class=" mt_10 pb_200">

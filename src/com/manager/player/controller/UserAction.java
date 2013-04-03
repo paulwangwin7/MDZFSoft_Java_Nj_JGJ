@@ -1144,7 +1144,7 @@ public class UserAction extends DispatchAction {
     */
    public ActionForward analysisUpload(ActionMapping mapping,ActionForm form,HttpServletRequest request,HttpServletResponse response){
 	   UserForm uf = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
-	   if(uf.getUserId()==0) {
+	   if(uf.getUserId()==0 || uf.getRoleType().equals("0")) {
 			request.setAttribute(Constants.JSP_TREE_LIST, frameTreeBO.getTreeList());
 		} else {
 			request.setAttribute(Constants.JSP_TREE_LIST, frameTreeBO.getTreeListByTreeId(uf.getTreeId(), request));
@@ -1157,7 +1157,7 @@ public class UserAction extends DispatchAction {
     */
    public ActionForward userFileUpload(ActionMapping mapping,ActionForm form,HttpServletRequest request,HttpServletResponse response){
 	   UserForm uf = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
-	   if(uf.getUserId()==0) {
+	   if(uf.getUserId()==0 || uf.getRoleType().equals("0")) {
 		   request.setAttribute(Constants.JSP_TREE_LIST, frameTreeBO.getTreeList());
 	   } else {
 		   request.setAttribute(Constants.JSP_TREE_LIST, frameTreeBO.getTreeListByTreeId(uf.getTreeId(), request));
