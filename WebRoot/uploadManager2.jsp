@@ -38,6 +38,7 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 							</h5>
 							<div class="search_form">
 <form id="uploadManagerForm" action="<%=basePath %>userAction.do?method=uploadManager" onsubmit="return uploadManagerFormSubmit()" method="post">
+<input type="hidden" name="treeId" value="<%=request.getParameter("treeId")==null?"":request.getParameter("treeId") %>" />
 <input type="hidden" name="uploadUserId" id="upload_userId" value="<%=request.getParameter("uploadUserId")==null?"":request.getParameter("uploadUserId") %>" />
 <input type="hidden" name="fileCreateUserId" id="upload_editId" value="<%=request.getParameter("fileCreateUserId")==null?"":request.getParameter("fileCreateUserId") %>" />
 								<div class="mt_10">
@@ -131,7 +132,13 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 												<span class="hd">上传时间：<br/>&nbsp;&nbsp;<%=Constants.timeFormat(uploadForm.getUploadTime(), "1").substring(2,16) %></span>
 											</li>
 											<li>
-												<span class="hd">使 用 人：</span><span class="bd"><%=uploadForm.getEditName() %></span>
+												<span class="hd">使 用 人：</span><span class="bd"><%=uploadForm.getUserName() %></span>
+											</li>
+											<li>
+												<span class="hd">采 集 人：</span><span class="bd"><%=uploadForm.getEditName() %></span>
+											</li>
+											<li>
+												<span class="hd"><%=uploadForm.getTreeName() %> 上传</span>
 											</li>
 										</ul>
 									</div>

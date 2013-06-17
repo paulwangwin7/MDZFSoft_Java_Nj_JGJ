@@ -1,10 +1,19 @@
 package com.njmd.bo;
 
+import java.util.List;
+
 import com.manager.pub.bean.Page;
 import com.manager.pub.bean.UserForm;
+import com.njmd.pojo.FrameUser;
 
 
 public interface FrameUserBO {
+	/**
+	 * 根据身份证号查询用户列表
+	 * @param idCard
+	 * @return
+	 */
+	public List<FrameUser> getUserListByIdCard(String idCard);
 	/**
 	 * 查询用户列表
 	 * 

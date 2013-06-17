@@ -15,6 +15,10 @@ jQuery(function($) {
 	{
 		showMsgObj('userAddMsg', '登录帐号长度不符，请控制在【4,20】个字节。', 2, 'req_loginName');
 	}
+	else if(getLenB($("#req_userIdCard").val())<15 || getLenB($("#req_userIdCard").val())>18)
+	{
+		showMsgObj('userAddMsg', '请检查身份证号信息是否正确。', 2, 'req_userIdCard');
+	}
 	else if(getLenB($("#req_userName").val())<4 || getLenB($("#req_userName").val())>20)
 	{
 		showMsgObj('userAddMsg', '姓名长度不符，请控制在【4,20】个字节。', 2, 'req_userName');

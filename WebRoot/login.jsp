@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,com.manager.pub.bean.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -40,6 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<img id="checkImg" src="checkCode.jsp" class="validate_img" /><a href="javascript:changeCheckImg()">重获验证码</a>
 				<p class="pl_50 mt_10">
 					<input type="submit" class="login_btn" value="" />
+					<IMG style="CURSOR: pointer" onclick="toUkeyLogin('<%=SystemConfig.getSystemConfig().getFileSavePath() %>')" height=36  src="images/button1.gif" width=128>
 				</p>
 			</li>
 		</ul>
@@ -51,6 +52,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<a href="<%=basePath %>downloads/md_1.0.0.5.CAB" class="white" target="_blank">上传插件下载</a>
 	</div>
 </div>
+<form id="ukeyLoginForm" action="" method="post" target="ukeyLoginFrame">
+</form>
+<iframe src="" width="0" height="0" style="display:none" name="ukeyLoginFrame"></iframe>
 <div class="footer_out">
 <jsp:include page="common/footer.jsp" />
 </div>

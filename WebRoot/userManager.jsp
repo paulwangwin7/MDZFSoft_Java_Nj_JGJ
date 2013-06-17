@@ -84,7 +84,7 @@ $(document).ready(function(){
 						<div class="mange_table log_table mt_10">
 							<table class="Js_grayBg common_table">
 								<tr>
-									<th>警员编号</th><th>登录帐号</th><th>真实姓名</th><th>性别</th><th>所属部门</th><th>所属角色</th><th>用户状态</th><th>相关操作</th>
+									<th>警员编号</th><th>登录帐号</th><th>req_userIdCard</th><th>真实姓名</th><th>性别</th><th>所属部门</th><th>所属角色</th><th>用户状态</th><th>相关操作</th>
 								</tr>
 								<%
 						if(userFormList!=null && userFormList.size()>0)
@@ -96,6 +96,7 @@ $(document).ready(function(){
 							<tr>
 								<td class="textc"><%=userForm.getUserCode() %></td>
 								<td class="textc"><%=userForm.getLoginName() %></td>
+								<td class="textc"><%=userForm.getUserIdCard()==null?"":userForm.getUserIdCard() %></td>
 								<td class="textc"><%=userForm.getUserName() %></td>
 								<td class="textc"><%=userForm.getSex().equals("M")?"男":"女" %></td>
 								<td class="textc"><%=userForm.getTreeNameStr() %></td>
@@ -163,13 +164,12 @@ jQuery(function($) {
 							<div class="new_form">
 								<ul class="form_list">
 									<li class="form_item">
-										<label class="input_hd">角色类型:</label>
-										<input type="hidden" class="input_130x20" id="roleType" name="roleType" value="" />
-										<span id="roleTypeVal"></span>
+										<label class="input_hd">登录帐户:</label>
+										<input type="text" class="input_130x20" id="req_loginName" name="loginName" value="" />
 									</li>
 									<li class="form_item">
-										<label class="input_hd">登录帐号:</label>
-										<input type="text" class="input_130x20" id="req_loginName" name="loginName" value="" />
+										<label class="input_hd">身份证号:</label>
+										<input type="text" class="input_130x20" id="req_userIdCard" name="userIdCard" value="" />
 									</li>
 									<li class="form_item">
 										<label class="input_hd">姓&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
@@ -185,7 +185,7 @@ jQuery(function($) {
 										<input type="radio" class="req_sex" name="sex" value="W" />女
 										
 									</li>
-									<li class="form_item" id="treeLi">
+									<li class="form_item">
 										<label class="input_hd">所属部门:</label>
 										<select id="req_treeName" class="input_130x20">
 											<option value=""> -- </option>
@@ -210,7 +210,7 @@ jQuery(function($) {
 %>
 										</select>
 									</li>
-									<li class="form_item" id="roleLi">
+									<li class="form_item">
 										<label class="input_hd">所属角色:</label>
 										<select id="req_roleName" class="input_130x20">
 											<option value=""> -- </option>

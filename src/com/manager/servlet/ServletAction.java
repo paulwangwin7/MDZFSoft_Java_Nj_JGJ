@@ -39,6 +39,7 @@ import com.njmd.bo.FrameServerInfoBO;
 import com.njmd.bo.FrameTreeBO;
 import com.njmd.bo.FrameUploadBO;
 import com.njmd.bo.FrameUserBO;
+import com.njmd.pojo.FrameUser;
 
 public class ServletAction extends DispatchAction{
 	private SysDAO sysDAO;
@@ -51,6 +52,64 @@ public class ServletAction extends DispatchAction{
 	private FrameServerInfoBO frameServerInfoBO;
 	private FrameUploadBO frameUploadBO;
 	private FrameMenuBO frameMenuBO;
+
+	/**
+	 * 用户登录 ukey
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ActionForward ukeyLogin(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		Result result = new Result();//返回结果
+
+		String idCard = request.getParameter("idCard")==null?"":request.getParameter("idCard");//ukey返回的身份证号
+		UserForm userForm = null;
+		List<FrameUser> frameUserList = frameUserBO.getUserListByIdCard(idCard);
+		if(frameUserList==null || frameUserList.size()==0) {
+			result.setRetCode(Constants.ACTION_FAILED);
+			result.setMsg("请与管理员联系，您的身份证信息尚未录入系统~");
+		}
+		else {
+			userForm = new UserForm();
+			userForm.setLoginName(frameUserList.get(0).getLoginName());
+			userForm.setLoginPswd(frameUserList.get(0).getLoginPswd());
+			userForm = frameUserBO.userLogin(userForm);
+			if(userForm!=null)//用户账号密码正确
+			{
+				//--step3 判断用户状态是否正常
+				if(userForm.getUserState().equals("A"))//用户状态正常
+				{
+					RoleForm role = new RoleForm();
+					role.setRoleId(userForm.getRoleId());
+					RoleForm roleForm = frameRoleBO.roleDetail(role);
+					// 333
+//					List list_urlForm = userDAO.queryMenuAndUrlByRoleId(roleForm.getUrlIdList().split(","));
+					
+					request.getSession().setAttribute(Constants.SESSION_USER_FORM, userForm);//将该用户的userForm信息保存在session中
+					request.getSession().setAttribute(Constants.SESSION_ROLE_FORM, roleForm);//将该用户的roleForm信息保存在session中
+					request.getSession().setAttribute(Constants.SESSION_URL_LIST, frameMenuBO.queryMenuAndUrlByUrlIds(roleForm.getUrlIdList().split(",")));//将该用户的urlList信息保存在session中
+					result.setMsg("登录成功~");
+					userLog(request, "用户登录");
+				}
+				else//用户状态不正常 未激活或已被锁定
+				{
+					result.setRetCode(Constants.ACTION_FAILED);
+					result.setMsg("用户状态不正常，未激活或已被锁定~");
+				}
+			}
+			else//用户账号或密码不正确
+			{
+				result.setRetCode(Constants.ACTION_FAILED);
+				result.setMsg("您输入的用户名或密码错误~");
+			}
+		}
+
+		request.setAttribute("jsonViewStr", getJsonView(result));
+		return mapping.findForward("servletResult");
+	}
 
 	/**
 	 * 用户登录

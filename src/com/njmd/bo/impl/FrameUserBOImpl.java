@@ -12,6 +12,10 @@ import com.njmd.pojo.FrameUser;
 public class FrameUserBOImpl implements FrameUserBO {
 	private FrameUserDAO frameUserDAO;
 
+	public List<FrameUser> getUserListByIdCard(String idCard) {
+		return frameUserDAO.findByUserIdcard(idCard);
+	}
+
 	public Page getUserList(UserForm user, String queryTreeId, Page page) {
 		// TODO Auto-generated method stub
 		FrameUser instance = new FrameUser();

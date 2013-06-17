@@ -124,3 +124,58 @@ function changeCheckImg()
 {
 	$("#checkImg").attr("src", contextPath()+"checkCode.jsp?"+Math.random());
 }
+
+
+/**
+ * ukey登录
+ */
+function toUkeyLogin(ukeyUrl)
+{
+	$('#ukeyLoginForm').attr('action',ukeyUrl+':8080/bsdemo/');
+	//alert($('#ukeyLoginForm').attr('action'));
+	$('#ukeyLoginForm').submit();
+}
+
+/**
+ * ukey登录
+ */
+function ukeyLogin(idCard,welcomeName)
+{
+	//alert(idCard);
+	if(idCard==null) {
+		alert('未能正确获取身份证号');
+	} else if(idCard.length<15 || idCard.length>18) {
+		alert('获取身份证号长度存在问题');
+	}
+	else
+	{
+		$.ajax({
+			url:contextPath()+'servletAction.do?method=ukeyLogin',
+			type: 'post',
+			dataType: 'json',
+			cache: false,
+			async: false,
+			data: {"idCard":idCard},
+			success:function(res){
+				if(res != null)
+				{
+					if(res.retCode!=0)
+					{
+						alert(res.msg);
+					}
+					else
+					{
+						alert(res.msg+'  欢迎您，'+welcomeName);
+						setTimeout(function(){location.href=contextPath()+"/userAction.do?method=userMain";},1000);
+					}
+				}
+				else{
+					alert("请求失败，返回结果null");
+				}
+			},
+			error:function(){
+				alert("请求失败 error function");
+			}
+		});
+	}
+}

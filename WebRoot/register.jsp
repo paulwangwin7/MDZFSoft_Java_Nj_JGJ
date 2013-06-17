@@ -7,13 +7,9 @@
 	String action = request.getParameter("action")==null?"add":request.getParameter("action");
 	String req_userId = request.getParameter("userId")==null?"":request.getParameter("userId");
 
-UserForm sessionForm = null;
-if(request.getSession().getAttribute(Constants.SESSION_USER_FORM)!=null) {
-	sessionForm = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
-}
-
 	String req_loginName = "";
 	String req_loginPswd = SystemConfig.getSystemConfig().getResetPswd();
+	String req_userIdCard = "";
 	String req_userName = "";
 	String req_userCode = "";
 	String req_sex = "";
@@ -32,6 +28,7 @@ if(request.getSession().getAttribute(Constants.SESSION_USER_FORM)!=null) {
 		{
 			req_loginName = userForm.getLoginName();
 			req_loginPswd = userForm.getLoginPswd();
+			req_userIdCard = userForm.getUserIdCard();
 			req_userName = userForm.getUserName();
 			req_userCode = userForm.getUserCode();
 			req_sex = userForm.getSex();
@@ -73,22 +70,16 @@ if(request.getSession().getAttribute(Constants.SESSION_USER_FORM)!=null) {
 							<div class="new_form">
 								<ul class="form_list">
 									<li class="form_item">
-										<label class="input_hd">登录帐号:</label>
+										<label class="input_hd">登录帐户:</label>
 										<input type="text" class="input_130x20" id="req_loginName" name="loginName" value="<%=req_loginName %>" />
-								<%
-									if(sessionForm!=null && sessionForm.getRoleId()==0) {
-								%>
-										<select name="roleType" id="roleType" onchange="roleTypeChange()">
-											<option value="">普通帐号</option>
-											<option value="0">交管局领导</option>
-										</select>
-								<%
-									}
-								%>
 									</li>
 									<li class="form_item">
 										<label class="input_hd">登录密码:</label>
 										<input type="password" class="input_130x20" id="req_loginPswd" name="loginPswd" value="<%=req_loginPswd %>" readonly />
+									</li>
+									<li class="form_item">
+										<label class="input_hd">身份证号:</label>
+										<input type="text" class="input_130x20" id="req_userIdCard" name="userIdCard" value="<%=req_userIdCard %>" />
 									</li>
 									<li class="form_item">
 										<label class="input_hd">姓&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
@@ -104,7 +95,7 @@ if(request.getSession().getAttribute(Constants.SESSION_USER_FORM)!=null) {
 										<input type="radio" class="req_sex" name="sex" value="W" <%=req_sex.equals("W")?"checked":"" %> />女
 										
 									</li>
-									<li class="form_item" id="treeLi">
+									<li class="form_item">
 										<label class="input_hd">所属部门:</label>
 										<select id="req_treeName" class="input_130x20">
 											<option value=""> -- </option>
@@ -130,7 +121,7 @@ if(request.getSession().getAttribute(Constants.SESSION_USER_FORM)!=null) {
 %>
 										</select>
 									</li>
-									<li class="form_item" id="roleLi">
+									<li class="form_item">
 										<label class="input_hd">所属角色:</label>
 										<select id="req_roleName" class="input_130x20">
 											<option value=""> -- </option>
@@ -174,19 +165,6 @@ if(request.getSession().getAttribute(Constants.SESSION_USER_FORM)!=null) {
 				</div>
 		</div>
 	</div>
-<script>
-function roleTypeChange() {
-jQuery(function($) {
-	if($('#roleType').val()=='0') {
-		$('#treeLi').css('display','none');
-		$('#roleLi').css('display','none');
-	} else {
-		$('#treeLi').css('display','block');
-		$('#roleLi').css('display','block');
-	}
-});
-}
-</script>
 <jsp:include page="common/footer.jsp" />
 <script type="text/javascript" src="js/all.js"></script>
 <div id="selectTreeDiv" icon="icon-save" style="display:none" class="boxcontent">
