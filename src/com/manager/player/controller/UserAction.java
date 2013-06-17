@@ -43,7 +43,7 @@ public class UserAction extends DispatchAction {
 	private FileUtils fileUtils = new FileUtils();
 
 	private JspForm jspForm;
-	private UploadForm uploadForm;
+//	private UploadForm uploadForm;
 	private InformationFrameForm informationFrameForm;
 	private String frame_information = "frame_information";
 	private int userActionCode = 0;//0-运行操作 1-用户登录已超时 2-用户不在此权限范围
@@ -445,7 +445,7 @@ public class UserAction extends DispatchAction {
 		}
 		if(uploadSuccess)
 		{
-			uploadForm = new UploadForm();
+			UploadForm uploadForm = new UploadForm();
 			UserForm userForm = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
 			uploadForm.setUserId(userForm.getUserId());
 			uploadForm.setEditId(Long.parseLong(request.getParameter("upload_editId")));
