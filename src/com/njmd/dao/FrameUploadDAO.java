@@ -703,7 +703,8 @@ public class FrameUploadDAO extends BaseHibernateDAO {
 		uploadForm.setFileState(frameUpload.getFileState());
 		uploadForm.setTree1Id(frameUpload.getTree1Id());
 		uploadForm.setTree2Id(frameUpload.getTree2Id());
-		uploadForm.setTreeName(findByTreeId(frameUpload.getTree1Id()).getTreeName());//显示的是上传人的部门名称
+//		uploadForm.setTreeName(findByTreeId(frameUpload.getTree1Id()).getTreeName());//显示的是上传人的部门名称
+		uploadForm.setTreeName(findByTreeId(frameUpload.getTree2Id()).getTreeName());//显示的是上传人的部门名称
 		uploadForm.setFileStats(frameUpload.getFileStats());
 		uploadForm.setFileRemark(frameUpload.getFileRemark());
 		uploadForm.setIpAddr(frameUpload.getIpAddr());

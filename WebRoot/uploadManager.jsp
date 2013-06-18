@@ -41,7 +41,7 @@ $(document).ready(function(){
 					<TABLE>
 					<TR>
 					<TD WIDTH="250PX" HEIGHT="800PX" VALIGN="TOP">
-						<div class="gray_bor_bg" style="width:240px;height:770px;overflow:auto;">
+						<div class="gray_bor_bg" style="width:240px;height:1058px;overflow:auto;">
 <div class="dtree">
 	<p><a href="javascript: d.openAll();">全部展开</a> | <a href="javascript: d.closeAll();">全部收缩</a></p>
 	<script type="text/javascript">
@@ -92,7 +92,7 @@ $(document).ready(function(){
 						</div>
 					</TD>
 					<TD VALIGN="TOP">
-						<iframe src="" id="uploadManagerQuery" name="uploadManagerQuery" style="width:700px;height:800px;overflow-x:hidden" frameborder="0"></iframe>
+						<iframe src="" id="uploadManagerQuery" name="uploadManagerQuery" style="width:700px;height:1400px;overflow-x:hidden" frameborder="0"></iframe>
 					</TD>
 					</TABLE>
 					</div>

@@ -132,13 +132,13 @@ String fileStatsVal = request.getParameter("fileStats")==null?"":request.getPara
 												<span class="hd">上传时间：<br/>&nbsp;&nbsp;<%=Constants.timeFormat(uploadForm.getUploadTime(), "1").substring(2,16) %></span>
 											</li>
 											<li>
-												<span class="hd">使 用 人：</span><span class="bd"><%=uploadForm.getUserName() %></span>
+												<span class="hd">上 传 人：</span><span class="bd"><%=uploadForm.getUserName() %></span>
 											</li>
 											<li>
-												<span class="hd">采 集 人：</span><span class="bd"><%=uploadForm.getEditName() %></span>
+												<span class="hd">使 用 人：</span><span class="bd"><%=uploadForm.getEditName() %></span>
 											</li>
 											<li>
-												<span class="hd"><%=uploadForm.getTreeName() %> 上传</span>
+												<span class="hd">部门：<%=uploadForm.getTreeName() %></span>
 											</li>
 										</ul>
 									</div>
