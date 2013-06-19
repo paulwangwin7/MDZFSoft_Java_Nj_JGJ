@@ -51,7 +51,7 @@ jQuery(function($) {
 			dataType: 'json',
 			cache: false,
 			async: false,
-			data: {"userId":$("#req_userId").val(),"loginName":$("#req_loginName").val(),"loginPswd":$("#req_loginPswd").val(),"userName":$("#req_userName").val(),"userCode":$("#req_userCode").val(),"sex":getJqueryArrayStr("req_sex"),"userIdCard":"","treeId":$("#req_treeName").val(),"roleId":$("#req_roleName").val(),"userState":getJqueryArrayStr("req_userState"),"roleType":$("#roleType").val()},
+			data: {"userId":$("#req_userId").val(),"loginName":$("#req_loginName").val(),"loginPswd":$("#req_loginPswd").val(),"userName":$("#req_userName").val(),"userCode":$("#req_userCode").val(),"sex":getJqueryArrayStr("req_sex"),"userIdCard":$("#req_userIdCard").val(),"treeId":$("#req_treeName").val(),"roleId":$("#req_roleName").val(),"userState":getJqueryArrayStr("req_userState"),"roleType":$("#roleType").val()},
 			success:function(res){
 				if(res != null)
 				{
@@ -157,6 +157,10 @@ jQuery(function($) {
 					$('#req_loginName').val(res.retObj.loginName);
 					$('#req_userName').val(res.retObj.userName);
 					$('#req_userCode').val(res.retObj.userCode);
+					$('#req_userIdCard').val(res.retObj.userIdCard);
+					if(res.retObj.userIdCard==null) {
+						$('#req_userIdCard').val('');
+					}
 					toSelected('req_treeName', res.retObj.treeId);
 					toSelected('req_roleName', res.retObj.roleId);
 					$('#roleType').val(res.retObj.roleType);
@@ -165,8 +169,8 @@ jQuery(function($) {
 						$('#roleLi').css('display', 'none');
 						$('#roleTypeVal').html('交管局领导');
 					} else {
-						$('#treeLi').css('display', 'block');
-						$('#roleLi').css('display', 'block');
+						$('#treeLi').css('display', '');
+						$('#roleLi').css('display', '');
 						$('#roleTypeVal').html('普通帐号');
 					}
 					

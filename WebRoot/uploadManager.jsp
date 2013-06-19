@@ -46,7 +46,7 @@ $(document).ready(function(){
 	<p><a href="javascript: d.openAll();">全部展开</a> | <a href="javascript: d.closeAll();">全部收缩</a></p>
 	<script type="text/javascript">
 		<!--
-		var treeRoot = "交警总队";
+		var treeRoot = "交管局";
 		d = new dTree('d');
 		var treeIndex = 0;
 		var childTreeIndex;

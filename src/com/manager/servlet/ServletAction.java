@@ -82,17 +82,28 @@ public class ServletAction extends DispatchAction{
 				//--step3 判断用户状态是否正常
 				if(userForm.getUserState().equals("A"))//用户状态正常
 				{
-					RoleForm role = new RoleForm();
-					role.setRoleId(userForm.getRoleId());
-					RoleForm roleForm = frameRoleBO.roleDetail(role);
-					// 333
-//					List list_urlForm = userDAO.queryMenuAndUrlByRoleId(roleForm.getUrlIdList().split(","));
-					
-					request.getSession().setAttribute(Constants.SESSION_USER_FORM, userForm);//将该用户的userForm信息保存在session中
-					request.getSession().setAttribute(Constants.SESSION_ROLE_FORM, roleForm);//将该用户的roleForm信息保存在session中
-					request.getSession().setAttribute(Constants.SESSION_URL_LIST, frameMenuBO.queryMenuAndUrlByUrlIds(roleForm.getUrlIdList().split(",")));//将该用户的urlList信息保存在session中
-					result.setMsg("登录成功~");
-					userLog(request, "用户登录");
+					if(userForm.getRoleType().equals("")) {//普通用户
+						RoleForm role = new RoleForm();
+						role.setRoleId(userForm.getRoleId());
+						RoleForm roleForm = frameRoleBO.roleDetail(role);
+						// 333
+	//					List list_urlForm = userDAO.queryMenuAndUrlByRoleId(roleForm.getUrlIdList().split(","));
+						
+						request.getSession().setAttribute(Constants.SESSION_USER_FORM, userForm);//将该用户的userForm信息保存在session中
+						request.getSession().setAttribute(Constants.SESSION_ROLE_FORM, roleForm);//将该用户的roleForm信息保存在session中
+						request.getSession().setAttribute(Constants.SESSION_URL_LIST, frameMenuBO.queryMenuAndUrlByUrlIds(roleForm.getUrlIdList().split(",")));//将该用户的urlList信息保存在session中
+						result.setMsg("登录成功~");
+						userLog(request, "用户登录");
+					} else {//观察者
+						RoleForm roleForm = new RoleForm();
+						roleForm.setRoleName("交管局领导");
+						roleForm.setTreeId("0");
+						roleForm.setUrlIdList("6,7,8");
+						request.getSession().setAttribute(Constants.SESSION_ROLE_FORM, roleForm);//将该用户的roleForm信息保存在session中
+						request.getSession().setAttribute(Constants.SESSION_USER_FORM, userForm);//将该用户的userForm信息保存在session中
+						request.getSession().setAttribute(Constants.SESSION_URL_LIST, frameMenuBO.queryMenuAndUrlByUrlIds(roleForm.getUrlIdList().split(",")));//将该用户的urlList信息保存在session中
+						result.setMsg("登录成功~");
+					}
 				}
 				else//用户状态不正常 未激活或已被锁定
 				{
@@ -247,7 +258,7 @@ public class ServletAction extends DispatchAction{
 			userForm.setLoginName("系统管理员");
 			userForm.setUserName("系统管理员");
 			userForm.setUserCode("000000");
-			userForm.setTreeNameStr("交警总队");
+			userForm.setTreeNameStr("交管局");
 			userForm.setRoleId(0);
 			userForm.setTreeId(0);
 			userForm.setSex("M");
