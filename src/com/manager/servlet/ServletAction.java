@@ -1,12 +1,32 @@
 package com.manager.servlet;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import jxl.CellReferenceHelper;
+import jxl.Workbook;
+import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
+import jxl.format.Colour;
+import jxl.write.Formula;
+import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -30,9 +50,9 @@ import com.manager.pub.bean.SystemConfig;
 import com.manager.pub.bean.TreeForm;
 import com.manager.pub.bean.UserForm;
 import com.manager.pub.util.Constants;
+import com.manager.pub.util.DateTimeUtil;
 import com.manager.pub.util.DateUtils;
 import com.manager.pub.util.HtmlUtils;
-import com.manager.pub.util.SysMonitor_windows;
 import com.njmd.bo.FrameMenuBO;
 import com.njmd.bo.FrameRoleBO;
 import com.njmd.bo.FrameServerInfoBO;
@@ -371,6 +391,7 @@ public class ServletAction extends DispatchAction{
 		treeForm.setParentTreeId(parentTreeId);
 		treeForm.setOrderBy("0");
 	
+		
 		if(treeName.trim().replace("　", "").length()==0){
 			result.setRetCode(Constants.ACTION_FAILED);
 			result.setMsg("部门管理-部门添加失败 部门名称不能为空~");
@@ -1384,7 +1405,7 @@ public class ServletAction extends DispatchAction{
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
         df.setMinimumFractionDigits(2);
-        if(Double.parseDouble((df.format(f.getFreeSpace()/1024.0/1024/1024)).replace(",", "")) < Double.parseDouble(SystemConfig.getSystemConfig().getMinfreeSpace())) {
+        if(Double.parseDouble((df.format(f.getFreeSpace()/1024.0/1024/1024)).replaceAll(",", "")) < Double.parseDouble(SystemConfig.getSystemConfig().getMinfreeSpace())) {
         	result.setRetCode(Constants.ACTION_FAILED);
         	result.setMsg("服务器磁盘空间将用尽，上传功能暂时被停止，请联系管理员！");
         }
@@ -1435,5 +1456,439 @@ public class ServletAction extends DispatchAction{
 	}
 	public void setFrameMenuBO(FrameMenuBO frameMenuBO) {
 		this.frameMenuBO = frameMenuBO;
+	}
+	
+	
+	/**
+	 * 2014.01.06 新的报表需求
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ActionForward statistics(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		List<String> xList=new ArrayList<String>();
+		Map<String,Integer> detialData=new HashMap<String,Integer>();
+		List<Object> yList=new ArrayList<Object>();
+		
+		Map<String,String> startTimes=new HashMap<String,String>();
+		Map<String,String> endTimes=new HashMap<String,String>();
+		
+		int queryType=request.getParameter("queryType")==null ? 1: Integer.parseInt(request.getParameter("queryType"));
+		int userType=request.getParameter("userType")==null?1:Integer.parseInt(request.getParameter("userType"));
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		
+		String dimension="0";
+		
+		String[] dimensions=request.getParameterValues("dimension");
+		if(null!=dimensions && dimensions.length!=0)
+			dimension=dimensions[0];
+		
+		int includeDZUser=request.getParameter("includeDZUser")==null?0:1;
+		
+		String corpId=request.getParameter("corpId")==null ?"0":request.getParameter("corpId");
+		
+		if("0".equals(corpId)){
+			List<TreeForm> trees=frameTreeBO.childTreeList(0L, 1);
+			yList.addAll(trees);
+		}else{
+			List<TreeForm> trees=frameTreeBO.childTreeList(Long.valueOf(corpId), 1);
+			if(null==trees || trees.size()==0){
+				Page page=new Page();
+				page.setPageCute(1);
+				page.setDbLine(Integer.MAX_VALUE);
+				
+				page=frameUserBO.getUserListByTree(Long.valueOf(corpId), page);
+				List<UserForm> users=(List<UserForm>)page.getListObject();
+				yList.addAll(users);
+			}else{
+				yList.addAll(trees);
+				
+				if(includeDZUser==1){
+					Page page=new Page();
+					page.setPageCute(1);
+					page.setDbLine(Integer.MAX_VALUE);
+					
+					page=frameUserBO.getUserListByTree(Long.valueOf(corpId), page);
+					List<UserForm> users=(List<UserForm>)page.getListObject();
+					yList.addAll(users);
+				}
+			}
+		}
+		
+		request.setAttribute("startFileUploadTime",startDate);
+		request.setAttribute("endFileUploadTime",endDate);
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat parser=new SimpleDateFormat("yyyyMMdd");
+		
+		if (queryType == 1) {
+			// 按年统计
+			Calendar begin=Calendar.getInstance();
+			begin.setTime(format.parse(startDate));
+			
+			Calendar end=Calendar.getInstance();
+			end.setTime(format.parse(endDate));
+			end.add(Calendar.MONTH, -11);
+			
+			for (int i = 1; i <= 12; i++) {
+				String tmp=year+"-"+(i<10?"0"+i:i);
+				xList.add(tmp);
+				startTimes.put(tmp, format.format(begin.getTime()));
+				endTimes.put(tmp, format.format(end.getTime()));
+				
+				begin.add(Calendar.MONTH, 1);
+				end.add(Calendar.MONTH, 1);
+			}
+		}
+		if (queryType==2 || queryType == 3) {
+			// 按天统计
+			startDate = startDate.replaceAll("-", "");
+			endDate = endDate.replaceAll("-", "");
+			String startDate1 = startDate.toString();
+			while (Integer.parseInt(startDate1) <= Integer.parseInt(endDate)) {
+				String tmp=format.format(parser.parse(startDate1));
+				xList.add(tmp);
+				startDate1 = DateTimeUtil.rollDate(startDate1, 1);
+				startTimes.put(tmp, tmp);
+				endTimes.put(tmp,tmp);
+			}
+		}
+		
+		detialData.putAll(frameUploadBO.getStatistics(queryType,userType,yList,year,month,startDate,endDate,dimension));
+		
+		TreeForm treeForm=new TreeForm();
+		treeForm.setTreeId(0l);
+		treeForm.setPath(",0,");
+		treeForm.setTreeName("交管局");
+		if(null!=corpId && !corpId.equals("0")){
+			treeForm.setTreeId(Long.valueOf(corpId));
+			treeForm.setPath("");
+			treeForm=frameTreeBO.treeDetail(treeForm);
+		}
+		
+		List<String> todayUploadUsers=frameUploadBO.todayUploadUsers(treeForm);
+		
+		request.setAttribute("startTimes", startTimes);
+		request.setAttribute("endTimes",endTimes);
+		request.setAttribute("xList", xList);
+		request.setAttribute("yList", yList);
+		request.setAttribute("detialData", detialData);
+		request.setAttribute("todayUploadUsers", todayUploadUsers);
+		
+		UserForm uf = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
+		if(uf.getUserId()==0 || uf.getRoleType().equals("0")) {
+			request.setAttribute(Constants.JSP_TREE_LIST, frameTreeBO.getTreeList());
+		} else {
+			request.setAttribute(Constants.JSP_TREE_LIST, frameTreeBO.getTreeListByTreeId(uf.getTreeId(), request));
+		}
+		
+		request.setAttribute("corpName", treeForm.getTreeName());
+		
+		return mapping.findForward("statistics");
+	}
+	
+	/**
+	 * 2014.01.06 新的报表需求
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ActionForward statisticsExport(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		List<String> xList=new ArrayList<String>();
+		Map<String,Integer> detialData=new HashMap<String,Integer>();
+		List<Object> yList=new ArrayList<Object>();
+		
+		Map<String,String> startTimes=new HashMap<String,String>();
+		Map<String,String> endTimes=new HashMap<String,String>();
+		
+		int queryType=request.getParameter("queryType")==null ? 1: Integer.parseInt(request.getParameter("queryType"));
+		int userType=request.getParameter("userType")==null?1:Integer.parseInt(request.getParameter("userType"));
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		
+		String dimension="0";
+		
+		String[] dimensions=request.getParameterValues("dimension");
+		if(null!=dimensions && dimensions.length!=0)
+			dimension=dimensions[0];
+		
+		int includeDZUser=request.getParameter("includeDZUser")==null?0:1;
+		
+		String corpId=request.getParameter("corpId")==null ?"0":request.getParameter("corpId");
+
+		TreeForm treeForm=new TreeForm();
+		treeForm.setTreeId(0l);
+		treeForm.setTreeName("交管局");
+		treeForm.setPath(",0,");
+		if(null!=corpId && !corpId.equals("0")){
+			treeForm.setTreeId(Long.valueOf(corpId));
+			treeForm.setPath("");
+			treeForm=frameTreeBO.treeDetail(treeForm);
+		}
+		
+		String corpName=treeForm.getTreeName();
+		
+		String fileName=corpName;
+		if("0".equals(corpId)){
+			List<TreeForm> trees=frameTreeBO.childTreeList(0L, 1);
+			yList.addAll(trees);
+		}else{
+			List<TreeForm> trees=frameTreeBO.childTreeList(Long.valueOf(corpId), 1);
+			if(null==trees || trees.size()==0){
+				Page page=new Page();
+				page.setPageCute(1);
+				page.setDbLine(Integer.MAX_VALUE);
+				
+				page=frameUserBO.getUserListByTree(Long.valueOf(corpId), page);
+				List<UserForm> users=(List<UserForm>)page.getListObject();
+				yList.addAll(users);
+			}else{
+				yList.addAll(trees);
+				
+				if(includeDZUser==1){
+					Page page=new Page();
+					page.setPageCute(1);
+					page.setDbLine(Integer.MAX_VALUE);
+					
+					page=frameUserBO.getUserListByTree(Long.valueOf(corpId), page);
+					List<UserForm> users=(List<UserForm>)page.getListObject();
+					yList.addAll(users);
+				}
+			}
+		}
+		
+		request.setAttribute("startFileUploadTime",startDate);
+		request.setAttribute("endFileUploadTime",endDate);
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat parser=new SimpleDateFormat("yyyyMMdd");
+		
+		if (queryType == 1) {
+			// 按年统计
+			Calendar begin=Calendar.getInstance();
+			begin.setTime(format.parse(startDate));
+			
+			Calendar end=Calendar.getInstance();
+			end.setTime(format.parse(endDate));
+			end.add(Calendar.MONTH, -11);
+			
+			for (int i = 1; i <= 12; i++) {
+				String tmp=year+"-"+(i<10?"0"+i:i);
+				xList.add(tmp);
+				startTimes.put(tmp, format.format(begin.getTime()));
+				endTimes.put(tmp, format.format(end.getTime()));
+				
+				begin.add(Calendar.MONTH, 1);
+				end.add(Calendar.MONTH, 1);
+			}
+		}
+		if (queryType==2 || queryType == 3) {
+			// 按天统计
+			startDate = startDate.replaceAll("-", "");
+			endDate = endDate.replaceAll("-", "");
+			String startDate1 = startDate.toString();
+			while (Integer.parseInt(startDate1) <= Integer.parseInt(endDate)) {
+				String tmp=format.format(parser.parse(startDate1));
+				xList.add(tmp);
+				startDate1 = DateTimeUtil.rollDate(startDate1, 1);
+				startTimes.put(tmp, tmp);
+				endTimes.put(tmp,tmp);
+			}
+		}
+		
+		detialData.putAll(frameUploadBO.getStatistics(queryType,userType,yList,year,month,startDate,endDate,dimension));
+		
+		List<String> todayUploadUsers=frameUploadBO.todayUploadUsers(treeForm);
+		
+//		request.setAttribute("startTimes", startTimes);
+//		request.setAttribute("endTimes",endTimes);
+//		request.setAttribute("xList", xList);
+//		request.setAttribute("yList", yList);
+//		request.setAttribute("detialData", detialData);
+//		request.setAttribute("todayUploadUsers", todayUploadUsers);
+//		
+//		return mapping.findForward("statistics");
+		
+		if (queryType == 1) {
+			// 按年统计
+			fileName+="_"+year+"年_部门上传汇总统计表";
+		}
+		if (queryType == 2) {
+			// 按月统计
+			fileName+="_"+year+"年"+month+"月_部门上传汇总统计表";
+		}
+		if (queryType == 3) {
+			// 按天统计
+			fileName+="_"+startDate+"~"+endDate+"日_部门上传汇总统计表";
+		}
+		
+		UserForm userForm = (UserForm)(request.getSession().getAttribute(Constants.SESSION_USER_FORM));
+		
+		
+		response.setContentType("application/vnd.ms-excel");  
+	    
+	    OutputStream fOut = null;  
+	    try {  
+	    	fOut = response.getOutputStream();  
+	        response.setHeader("content-disposition", "attachment;filename=" + java.net.URLEncoder.encode(fileName+"_"+format.format(new Date()), "UTF-8") + ".xls");  
+	         
+	        WritableWorkbook wwb=Workbook.createWorkbook(fOut);
+				
+			WritableSheet ws = wwb.createSheet("Sheet0",1);
+			
+			WritableFont font = new WritableFont(WritableFont.TIMES);
+		    font.setColour(Colour.BLUE);
+		    WritableCellFormat numberFormatWithColor = new WritableCellFormat(font);
+		    numberFormatWithColor.setBorder(Border.ALL, BorderLineStyle.THIN);
+		    WritableCellFormat numberFormatWithOutColor=new WritableCellFormat();
+		    numberFormatWithOutColor.setBorder(Border.ALL, BorderLineStyle.THIN);
+		    
+		    WritableCellFormat labelCenterWithOutBlod=new WritableCellFormat(new WritableFont
+		    	      (WritableFont.ARIAL, 11));
+		    labelCenterWithOutBlod.setAlignment(Alignment.CENTRE);
+		    labelCenterWithOutBlod.setBorder(Border.ALL, BorderLineStyle.THIN);
+		    
+		    WritableCellFormat labelCenterWithBlod=new WritableCellFormat(new WritableFont
+		    	      (WritableFont.ARIAL, 11,WritableFont.BOLD));
+		    labelCenterWithBlod.setAlignment(Alignment.CENTRE);
+		    labelCenterWithBlod.setBorder(Border.ALL, BorderLineStyle.THIN);
+		    
+		    WritableFont headerFont = new WritableFont
+		    	      (WritableFont.ARIAL, 14, WritableFont.BOLD);
+		    WritableCellFormat header=new WritableCellFormat(headerFont);
+		    header.setAlignment(Alignment.CENTRE);
+		    ws.addCell(new Label(0,0,fileName.replaceAll("_", " "),header));
+		    ws.mergeCells(0, 0, yList.size()+1, 0);
+		    
+		    WritableFont secondHeaderFont=new WritableFont(WritableFont.ARIAL,11);
+		    WritableCellFormat  secondHeader=new WritableCellFormat(secondHeaderFont);
+		    if(yList.size()+2<8){
+		    	ws.addCell(new Label(0,1,"部门:"+corpName,secondHeader));
+		    	ws.addCell(new Label(yList.size(),1,"制表人:"+userForm.getUserName(),secondHeader));
+		    	ws.addCell(new Label(yList.size()+1,1,"制表日期:"+new SimpleDateFormat("yyyy-MM-dd").format(new Date()),secondHeader));
+		    }else{
+		    	ws.addCell(new Label(0,1,"部门:"+corpName,secondHeader));
+		    	ws.addCell(new Label(yList.size()+2-5,1,"制表人:"+userForm.getUserName(),secondHeader));
+		    	ws.addCell(new Label(yList.size()+2-3,1,"制表日期:"+new SimpleDateFormat("yyyy-MM-dd").format(new Date()),secondHeader));
+		    	ws.mergeCells(yList.size()+2-5,1, yList.size()+2-4,1);
+		    	ws.mergeCells(yList.size()+2-3,1,yList.size()+2-1,1);
+		    	ws.mergeCells(0,1,2,1);
+		    }
+		    
+		    
+		    boolean[] flags=new boolean[yList.size()+1];
+		    
+		    int row=2;
+		    ws.addCell(new Label(0,row,"",labelCenterWithOutBlod));
+		    int i=0;
+		    for(;i<yList.size();i++){
+		    	if(yList.get(i) instanceof TreeForm)
+		    		ws.addCell(new Label(i+1,row,((TreeForm)yList.get(i)).getTreeName(),labelCenterWithOutBlod));
+		    	else if(yList.get(i) instanceof UserForm)
+		    		ws.addCell(new Label(i+1,row,((UserForm)yList.get(i)).getUserName(),labelCenterWithOutBlod));
+		    }
+			ws.addCell(new Label(i+1,row,"小计",labelCenterWithOutBlod));
+		    
+			row++;
+			for(int n=0;n<xList.size();n++){
+				ws.addCell(new Label(0,row,xList.get(n),labelCenterWithOutBlod));
+				int j=0;
+				boolean flag=false;
+				for(;j<yList.size();j++){
+					String key="";
+					if(yList.get(j) instanceof TreeForm)
+			    		key="C_"+((TreeForm)yList.get(j)).getTreeId()+"_"+xList.get(n);
+			    	else if(yList.get(j) instanceof UserForm)
+			    		key="U_"+((UserForm)yList.get(j)).getUserId()+"_"+xList.get(n);
+
+					key=key.replaceAll("-", "");
+					Integer item=0;
+					if(detialData.containsKey(key)){
+						item=detialData.get(key);
+					}
+					
+					if(item==0){
+						jxl.write.Number number=new jxl.write.Number(1+j,row,item,numberFormatWithOutColor);
+						ws.addCell(number);
+					}else{
+						jxl.write.Number number=new jxl.write.Number(1+j,row,item,numberFormatWithColor);
+						ws.addCell(number);
+						flag=true;
+						flags[j]=true;
+					}
+				}
+				
+				StringBuilder sb=new StringBuilder("SUM(");
+				sb.append(CellReferenceHelper.getCellReference(1, row))
+					.append(":")
+					.append(CellReferenceHelper.getCellReference(j, row))
+					.append(")");
+				
+				if(!flag){
+					Formula f = new Formula(1+j,row,  sb.toString(),numberFormatWithOutColor);
+					ws.addCell(f);
+				}else{
+					Formula f = new Formula(1+j,row,  sb.toString(),numberFormatWithColor);
+					ws.addCell(f);
+					flags[j]=true;
+				}
+				
+				row++;
+			}
+			
+			ws.addCell(new Label(0,row,"总计",labelCenterWithBlod));
+			for(int j=0;j<yList.size()+1;j++){
+				StringBuilder sb=new StringBuilder("SUM(");
+				sb.append(CellReferenceHelper.getCellReference(j+1, 1))
+					.append(":")
+					.append(CellReferenceHelper.getCellReference(j+1, row-1))
+					.append(")");
+				
+				
+				if(!flags[j]){
+					Formula f = new Formula(j+1,row,  sb.toString(),numberFormatWithOutColor);
+					ws.addCell(f);
+				}else{
+					Formula f = new Formula(j+1,row,  sb.toString(),numberFormatWithColor);
+					ws.addCell(f);
+				}
+			}
+			
+			row++;
+			ws.addCell(new Label(0,row,"今天["+new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"]已经有"+todayUploadUsers.size()+"个警员上传数据!"));
+		    ws.mergeCells(0, row, yList.size()+1, row);
+			
+			wwb.write();
+			wwb.close();
+	    }  
+	    catch (Exception e)  
+	    {e.printStackTrace();}  
+	    finally  
+	    {  
+	        try  
+	        {  
+	        	if(null!=fOut){
+		            fOut.flush();  
+		            fOut.close();  
+	        	}
+	        }  
+	        catch (IOException e)  
+	        {}  
+	    }  
+	    
+	    return null;
 	}
 }

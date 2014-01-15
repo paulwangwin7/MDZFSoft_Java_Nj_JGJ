@@ -73,12 +73,13 @@
 	<listener>
 		<listener-class>com.manager.pub.util.SysInitListener</listener-class>
 	</listener>
+	<!-- 
 	<listener>
 		<listener-class>com.manager.pub.util.TimerTask</listener-class>
-	</listener>
+	</listener> 
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-	</listener>
+	</listener>   -->
 	<welcome-file-list>
   		<welcome-file>/login.jsp</welcome-file>
  	</welcome-file-list>

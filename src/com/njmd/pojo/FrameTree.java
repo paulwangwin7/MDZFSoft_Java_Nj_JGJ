@@ -18,6 +18,8 @@ public class FrameTree implements java.io.Serializable {
 	private String createTime;
 	private Long parentTreeId;
 	private Long orderBy;
+	
+	private String path;
 
 	// Constructors
 
@@ -108,6 +110,14 @@ public class FrameTree implements java.io.Serializable {
 
 	public void setOrderBy(Long orderBy) {
 		this.orderBy = orderBy;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 }

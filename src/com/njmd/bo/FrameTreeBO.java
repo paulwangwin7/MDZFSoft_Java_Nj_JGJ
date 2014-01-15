@@ -98,4 +98,6 @@ public interface FrameTreeBO {
 	 * @return
 	 */
 	public List<TreeForm> treeAllList();
+	
+	public List<TreeForm> childTreeList(java.lang.Long treeId);
 }

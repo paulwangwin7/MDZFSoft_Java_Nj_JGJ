@@ -120,7 +120,7 @@ public class FrameTreeDAO extends BaseHibernateDAO {
 		Session session = getSession();
 		try {
 			session.clear();
-			String queryString = "from FrameTree as model where model." + propertyName + "= ? order by model.treeId";
+			String queryString = "from FrameTree as model where model." + propertyName + "= ? order by model.orderBy";
 			Query queryObject = session.createQuery(queryString);
 			queryObject.setParameter(0, value);
 			results = queryObject.list();

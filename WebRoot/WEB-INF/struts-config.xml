@@ -55,6 +55,8 @@
 		<forward name="playFile" path="/play.jsp" /><!-- 文件播放 -->
 		<forward name="noticeManagerToAdd" path="/common/noticeManagerAdd.jsp" /><!-- 公告添加 -->
 		
+		<forward name="statistics" path="/statistics.jsp" />
+		
 		<!-- admin forwards -->
 		<forward name="adminMain" path="/admin/main.jsp" /><!-- 系统管理员主页 -->
 		<forward name="adminLogin" path="/sysLogin.html" /><!-- 系统管理员登录界面 -->
@@ -75,6 +77,7 @@
 		<forward name="user_userSelect" path="/jsp/user/userSelect.jsp" />
 		<!-- client forwards -->
 		<forward name="clientUploadFileShow" path="/jsp/client/fileUploadShow.jsp" />
+		
 	</global-forwards>
 
 	<action-mappings>

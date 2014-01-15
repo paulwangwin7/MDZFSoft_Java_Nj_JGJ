@@ -129,7 +129,7 @@ if(request.getAttribute("uploadLogList_ByTree1")!=null)
 	</head>
 	<body>
 		<!-- 3. Add the container -->
-		<div id="container" style="width: 800px; height: 600px"></div>
+		<div id="container" style="width: 800px; height: <%=600+(list.size()>20?list.size()-20:0)*10 %>px"></div>
 	</body>
 </html>
 <%

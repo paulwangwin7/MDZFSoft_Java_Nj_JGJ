@@ -356,13 +356,14 @@ public class UserAction extends DispatchAction {
 		}
 //		Long queryTreeId = new Long(request.getParameter("query_treeId"));
 //		request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserListByTree(queryTreeId, new Page(pagecute, 5)));
+		
+		String queryTreeId = request.getParameter("query_treeId")==null?"":request.getParameter("query_treeId");
+//		UserForm uf = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
 		UserForm userForm = new UserForm();
-		UserForm uf = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
-		userForm.setTreeId(uf.getTreeId());
+		userForm.setTreeId(Long.valueOf(queryTreeId));
 		userForm.setUserName(request.getParameter("user_name")==null?"":request.getParameter("user_name"));
 		userForm.setUserCode(request.getParameter("user_code")==null?"":request.getParameter("user_code"));
-		String queryTreeId = request.getParameter("query_treeId")==null?"":request.getParameter("query_treeId");
-		request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserList(userForm, queryTreeId, new Page(pagecute, 5)));
+		request.setAttribute(Constants.PAGE_INFORMATION, frameUserBO.getUserList(userForm,/* queryTreeId */"", new Page(pagecute, 5)));
 		return mapping.findForward("userChoose");
 	}
 
@@ -646,6 +647,37 @@ public class UserAction extends DispatchAction {
 			String uploadUserId = request.getParameter("uploadUserId")==null?"":request.getParameter("uploadUserId");
 			String fileCreateUserId = request.getParameter("fileCreateUserId")==null?"":request.getParameter("fileCreateUserId");//采集人
 			String treeId = request.getParameter("treeId")==null?"":request.getParameter("treeId");
+			
+			StringBuilder sb=new StringBuilder("");
+			if(!"".equals(treeId)){
+				try{
+					sb.append("'").append(treeId).append("',");
+					List list=frameTreeBO.childTreeList(Long.valueOf(treeId));
+					if(null!=list && list.size()>0){
+						for(int i=0;i<list.size();i++){
+							TreeForm treeForm1=(TreeForm)list.get(i);
+							sb.append("'").append(treeForm1.getTreeId()).append("',");
+						} 
+					}
+					if(sb.length()>0){
+						sb.deleteCharAt(sb.length()-1);
+					}
+				}catch(Exception e){};
+			}else{
+				sb.append("'").append(userForm.getTreeId()).append("',");
+				List list=frameTreeBO.childTreeList(Long.valueOf(userForm.getTreeId()));
+				if(null!=list && list.size()>0){ 
+					for(int i=0;i<list.size();i++){
+						TreeForm treeForm1=(TreeForm)list.get(i);
+						sb.append("'").append(treeForm1.getTreeId()).append("',");
+					}  
+				}
+				if(sb.length()>0){
+					sb.deleteCharAt(sb.length()-1);
+				}
+				
+			}
+			
 			int pagecute = 1;
 			try
 			{
@@ -668,7 +700,7 @@ public class UserAction extends DispatchAction {
 				}
 				if(userForm.getUserId()==0) {
 					//request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByAdmin(uploadName, "", "", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
-					request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, createTimeBegin, createTimeEnd, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 8)));
+					request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, sb.toString(), beginTime, endTime, createTimeBegin, createTimeEnd, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 8)));
 					return mapping.findForward("uploadManager");
 				} else {
 					if(parentTreeId!=-1)
@@ -677,12 +709,12 @@ public class UserAction extends DispatchAction {
 							parentTreeId = userForm.getTreeId();
 						}
 //						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByTree(uploadName, userForm.getTreeId()+"", parentTreeId+"", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
-						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, createTimeBegin, createTimeEnd, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 8)));
+						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, sb.toString(), beginTime, endTime, createTimeBegin, createTimeEnd, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 8)));
 						return mapping.findForward("uploadManager");
 					}
 					else {
 //						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadListByAdmin(uploadName, "", "", beginTime, endTime, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 10)));
-						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, treeId, beginTime, endTime, createTimeBegin, createTimeEnd, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 8)));
+						request.setAttribute(Constants.PAGE_INFORMATION, frameUploadBO.uploadManagerQuery(uploadName, sb.toString(), beginTime, endTime, createTimeBegin, createTimeEnd, uploadUserId, fileCreateUserId, fileStats, fileRemark, new Page(pagecute, 8)));
 						return mapping.findForward("uploadManager");
 					}
 				}

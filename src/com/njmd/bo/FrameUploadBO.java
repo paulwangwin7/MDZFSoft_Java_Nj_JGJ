@@ -1,8 +1,10 @@
 package com.njmd.bo;
 
 import java.util.List;
+import java.util.Map;
 
 import com.manager.pub.bean.Page;
+import com.manager.pub.bean.TreeForm;
 import com.manager.pub.bean.UploadForm;
 
 
@@ -172,4 +174,11 @@ public interface FrameUploadBO {
 	 * @return
 	 */
 	public List<UploadForm> expiredUploadAllList(String expired);
+
+	
+	public Map<String, Integer> getStatistics(
+			int queryType,int userType, List<Object> yList, String year, String month,
+			String startDate, String endDate,String dimension) throws Exception;
+
+	public List<String> todayUploadUsers(TreeForm treeForm);
 }

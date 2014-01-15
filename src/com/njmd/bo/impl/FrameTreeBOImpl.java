@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.manager.pub.bean.TreeForm;
+import com.manager.pub.util.Constants;
 import com.manager.pub.util.DateUtils;
 import com.njmd.bo.FrameTreeBO;
 import com.njmd.dao.FrameTreeDAO;
@@ -110,6 +111,22 @@ public class FrameTreeBOImpl implements FrameTreeBO {
 			frameTree.setCreateUser(treeForm.getCreateUser());
 			frameTree.setOrderBy(new Long(treeForm.getOrderBy()));
 			addResult = frameTreeDAO.save(frameTree);
+			if(addResult==Constants.ACTION_SUCCESS){
+				list=frameTreeDAO.findByTreeName(treeForm.getTreeName());
+				if(list!=null && list.size()>0){
+					FrameTree tmp=(FrameTree)list.get(0);
+					FrameTree parent=frameTreeDAO.findById(treeForm.getParentTreeId());
+					if(null==parent){
+						tmp.setPath(",0,"+tmp.getTreeId()+",");
+					}else{
+						tmp.setPath(parent.getPath()+tmp.getTreeId()+",");
+					}
+					tmp.setOrderBy(tmp.getTreeId());
+					addResult=frameTreeDAO.attachDirty(tmp);
+				}
+				
+			}
+			
 		}
 		return addResult;
 	}
@@ -177,10 +194,41 @@ public class FrameTreeBOImpl implements FrameTreeBO {
 		treeForm.setCreateTime(frameTree.getCreateTime());
 		treeForm.setParentTreeId(frameTree.getParentTreeId());
 		treeForm.setOrderBy(frameTree.getOrderBy()+"");
+		treeForm.setPath(frameTree.getPath()+"");
 		return treeForm;
 	}
 
 	public void setFrameTreeDAO(FrameTreeDAO frameTreeDAO) {
 		this.frameTreeDAO = frameTreeDAO;
+	}
+	
+	public List<TreeForm> childTreeList(java.lang.Long treeId){
+		List<TreeForm> treeList = new ArrayList<TreeForm>();
+		
+		FrameTree frameTree = frameTreeDAO.findById(treeId);
+		if(frameTree!=null) {
+			TreeForm treeForm = new TreeForm();
+			treeList.add(setTreeFormByFrameTree(treeForm, frameTree));
+		}
+		
+		List list = frameTreeDAO.findByParentTreeId(treeId);
+		if(list!=null && list.size()>0) {
+			for(Object frameTreeObj: list) {
+				TreeForm treeForm = new TreeForm();
+				treeList.add(setTreeFormByFrameTree(treeForm, (FrameTree)frameTreeObj));
+				
+				List tmpList=frameTreeDAO.findByParentTreeId(treeForm.getTreeId());
+				
+				if(tmpList!=null && tmpList.size()>0) {
+					for(Object frameTreeObj1: tmpList) {
+						TreeForm treeForm1 = new TreeForm();
+						treeList.add(setTreeFormByFrameTree(treeForm1, (FrameTree)frameTreeObj1));
+					}
+				}
+				
+			}
+		}
+		
+		return treeList;
 	}
 }

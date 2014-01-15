@@ -19,6 +19,8 @@ public class TreeForm {
 	private long parentTreeId;//父级treeId
 	@Expose
 	private String orderBy;//排序
+	@Expose
+	private String path; 
 
 	public TreeForm(){}
 
@@ -69,5 +71,13 @@ public class TreeForm {
 	}
 	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 }

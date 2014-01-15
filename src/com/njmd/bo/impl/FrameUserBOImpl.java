@@ -1,6 +1,14 @@
 package com.njmd.bo.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 
 import com.manager.pub.bean.Page;
 import com.manager.pub.bean.UserForm;
@@ -156,5 +164,25 @@ public class FrameUserBOImpl implements FrameUserBO {
 
 	public void setFrameUserDAO(FrameUserDAO frameUserDAO) {
 		this.frameUserDAO = frameUserDAO;
+	}
+
+	@Override
+	public int countUserByPath(String path) {
+		StringBuffer sb=new StringBuffer();
+		sb.append("select count(*) c from frame_user t1")
+			.append(" left join frame_tree t2 on t1.tree_id=t2.tree_id ")
+			.append(" where t2.path like '").append(path).append("%' ");
+		
+		Session session = frameUserDAO.getSession();
+		session.clear();
+		SQLQuery query = session.createSQLQuery(sb.toString());
+		query.addScalar("c",Hibernate.INTEGER);
+		List<Integer> list = (List<Integer>) query.list();
+		session.close();
+		
+		if(null==list || list.size()==0)
+			return 0;
+		
+		return list.get(0);
 	}
 }

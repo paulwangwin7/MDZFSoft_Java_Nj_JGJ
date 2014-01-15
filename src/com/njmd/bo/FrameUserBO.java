@@ -124,4 +124,6 @@ public interface FrameUserBO {
 	 * @return
 	 */
 	public UserForm userById(UserForm userForm);
+	
+	public int countUserByPath(String path);
 }

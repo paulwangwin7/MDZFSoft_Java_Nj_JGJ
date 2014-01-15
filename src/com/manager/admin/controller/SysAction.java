@@ -289,8 +289,8 @@ public class SysAction extends DispatchAction {
     		serverInfoForm.setRatioCPU(Math.abs((int)mib.getCpuRatio()));
     		serverInfoForm.setRatioMEMORY((int)((mib.getTotalMemory()-mib.getFreeMemory())/mib.getTotalMemory()*100));
     		serverInfoForm.setUseMEMORY((mib.getTotalMemory()-mib.getFreeMemory())+"");
-    		serverInfoForm.setRatioHARDDISK((int)((Double.parseDouble(mib.getHarddiskTotal())-Double.parseDouble(mib.getHarddiskFree()))/Double.parseDouble(mib.getHarddiskTotal())*100));
-    		serverInfoForm.setUseHARDDISK(Double.parseDouble(mib.getHarddiskTotal())-Double.parseDouble(mib.getHarddiskFree())+"");
+    		serverInfoForm.setRatioHARDDISK((int)((Double.parseDouble(mib.getHarddiskTotal().replaceAll(",", ""))-Double.parseDouble(mib.getHarddiskFree().replaceAll(",", "")))/Double.parseDouble(mib.getHarddiskTotal().replaceAll(",", ""))*100));
+    		serverInfoForm.setUseHARDDISK(Double.parseDouble(mib.getHarddiskTotal().replaceAll(",", ""))-Double.parseDouble(mib.getHarddiskFree().replaceAll(",", ""))+"");
     		serverInfoForm.setLetter(SystemConfig.getSystemConfig().getLetter());
     		serverInfoForm.setSaveIp(SystemConfig.getSystemConfig().getFtpHost());
 //        	request.setAttribute("result", sysDAO.serverInfoAdd(serverInfoForm));

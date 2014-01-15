@@ -1,3 +1,6 @@
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.web.context.WebApplicationContext"%>
+<%@page import="com.njmd.bo.FrameUserBO"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page import="com.manager.pub.bean.*, com.manager.pub.util.*, java.util.*" %>
 <%
@@ -7,6 +10,10 @@ UserForm userForm = null;
 if(request.getSession().getAttribute(Constants.SESSION_USER_FORM)!=null) {
 	userForm = (UserForm)request.getSession().getAttribute(Constants.SESSION_USER_FORM);
 }
+
+
+WebApplicationContext wac=WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext());
+FrameUserBO frameUserBO=(FrameUserBO)wac.getBean("frameUserBO");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -68,14 +75,14 @@ $(document).ready(function(){
 			TreeForm rootTreeForm = (TreeForm)((List)(list_totalTree.get(i))).get(0);
 			List<TreeForm> treeFormList = ((List<TreeForm>)((List)(list_totalTree.get(i))).get(1));
 %>
-		d.add(treeIndex,0,'<%=rootTreeForm.getTreeName() %>&nbsp;&nbsp;<a href="javascript:userChoose(\'<%=rootTreeForm.getTreeId() %>\')">警员选择</a>','<%=rootTreeForm.getTreeId() %>,<%=rootTreeForm.getTreeName() %>');
+		d.add(treeIndex,0,'<%=rootTreeForm.getTreeName() %>&nbsp;&nbsp;<a href="javascript:userChoose(\'<%=rootTreeForm.getTreeId() %>\')">警员选择(<%=frameUserBO.countUserByPath(rootTreeForm.getPath()) %>)</a>','<%=rootTreeForm.getTreeId() %>,<%=rootTreeForm.getTreeName() %>');
 		childTreeIndex = treeIndex;
 		treeIndex++;
 <%
 			for(int j=0; j<treeFormList.size(); j++)//二级部门循环
 			{
 %>
-		d.add(treeIndex,childTreeIndex,'<%=treeFormList.get(j).getTreeName() %>&nbsp;&nbsp;<a href="javascript:userChoose(\'<%=treeFormList.get(j).getTreeId() %>\')">警员选择</a>','<%=treeFormList.get(j).getTreeId() %>,<%=treeFormList.get(j).getTreeName() %>');
+		d.add(treeIndex,childTreeIndex,'<%=treeFormList.get(j).getTreeName() %>&nbsp;&nbsp;<a href="javascript:userChoose(\'<%=treeFormList.get(j).getTreeId() %>\')">警员选择(<%=frameUserBO.countUserByPath(treeFormList.get(j).getPath()) %>)</a>','<%=treeFormList.get(j).getTreeId() %>,<%=treeFormList.get(j).getTreeName() %>');
 		treeIndex++;
 <%
 			}

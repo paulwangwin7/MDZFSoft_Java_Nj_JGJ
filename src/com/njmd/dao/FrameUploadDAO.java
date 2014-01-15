@@ -333,10 +333,10 @@ public class FrameUploadDAO extends BaseHibernateDAO {
 			session.clear();
 			StringBuffer queryString = new StringBuffer("from FrameUpload as model");
 			queryString.append(" where model.fileState = 'A'");
-			if(treeId.equals("")) {
-			} else {
-				queryString.append(" and model.tree2Id = ?");
-			}
+//			if(treeId.equals("")) {
+//			} else {
+//				queryString.append(" and model.tree2Id = ?");
+//			}
 			if(beginTime.equals("") || beginTime.equals("")) {
 
 			} else {
@@ -363,13 +363,14 @@ public class FrameUploadDAO extends BaseHibernateDAO {
 				queryString.append(" and model.uploadName like ?");
 			}
 			queryString.append(" and (model.fileState!='F' or model.fileState!='U')");
+			queryString.append(" and model.tree1Id in( "+treeId+") ");
 			queryString.append(" order by model.uploadId desc");
 			Query queryObject = session.createQuery(queryString.toString());
 			int parameterIndex = 0;
-			if(treeId.equals("")) {
-			} else {
-				queryObject.setParameter(parameterIndex++, new Long(treeId));
-			}
+//			if(treeId.equals("")) {
+//			} else {
+//				queryObject.setParameter(parameterIndex++, new Long(treeId));
+//			}
 			if(beginTime.equals("") || endTime.equals("")) {
 
 			} else {
