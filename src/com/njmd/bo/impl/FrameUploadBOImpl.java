@@ -206,14 +206,23 @@ public class FrameUploadBOImpl implements FrameUploadBO {
 					for(Map.Entry<String,String> entry:startTimes.entrySet()){
 						if( c!=0)
 							sb.append(" union ");
-						
-						sb.append("select 'C_").append(((TreeForm)item).getTreeId()).append("_").append(entry.getKey()).append("' a , count(*) b from frame_upload t1")
-							.append(" left join frame_tree t2 on t1.tree2_id=t2.tree_id ")
-							.append(" where substr(t1.upload_time,0,8) >= '").append(entry.getValue()).append("' ")
-							.append(" and substr(t1.upload_time,0,8) <= '").append(endTimes.get(entry.getKey())).append("' and ")
-							.append(" t2.path like '").append(((TreeForm)item).getPath()).append("%' ")
-							.append(dimensionSql);
-						 
+
+						if(userType==1){
+							sb.append("select 'C_").append(((TreeForm)item).getTreeId()).append("_").append(entry.getKey()).append("' a , count(*) b from frame_upload t1")
+								.append(" left join frame_user t3 on t1.edit_id=t3.user_id ")
+								.append(" left join frame_tree t2 on t3.tree_id=t2.tree_id ")
+								.append(" where substr(t1.upload_time,0,8) >= '").append(entry.getValue()).append("' ")
+								.append(" and substr(t1.upload_time,0,8) <= '").append(endTimes.get(entry.getKey())).append("' and ")
+								.append(" t2.path like '").append(((TreeForm)item).getPath()).append("%' ")
+								.append(dimensionSql);
+						}else{
+							sb.append("select 'C_").append(((TreeForm)item).getTreeId()).append("_").append(entry.getKey()).append("' a , count(*) b from frame_upload t1")
+								.append(" left join frame_tree t2 on t1.tree2_id=t2.tree_id ")
+								.append(" where substr(t1.upload_time,0,8) >= '").append(entry.getValue()).append("' ")
+								.append(" and substr(t1.upload_time,0,8) <= '").append(endTimes.get(entry.getKey())).append("' and ")
+								.append(" t2.path like '").append(((TreeForm)item).getPath()).append("%' ")
+								.append(dimensionSql);
+						}
 						c++;
 					}
 				}else{
@@ -226,14 +235,24 @@ public class FrameUploadBOImpl implements FrameUploadBO {
 					if( c!=0)
 						sb.append(" union ");
 					
-					sb.append("select 'C_").append(((TreeForm)item).getTreeId()).append("_'||substr(t1.upload_time,0,8) a,count(*) b from frame_upload t1")
-					.append(" left join frame_tree t2 on t1.tree2_id=t2.tree_id ") 
-					.append(" where substr(t1.upload_time,0,8) >= '").append(startDate).append("' ")
-					.append(" and substr(t1.upload_time,0,8) <= '").append(endDate).append("' and ")
-					.append(" t2.path like '").append(((TreeForm)item).getPath()).append("%' ")
-					.append(dimensionSql)
-					.append(" group by substr(t1.upload_time,0,8) "); 
-					
+					if(userType==1){
+						sb.append("select 'C_").append(((TreeForm)item).getTreeId()).append("_'||substr(t1.upload_time,0,8) a,count(*) b from frame_upload t1")
+							.append(" left join frame_user t3 on t1.edit_id=t3.user_id ")
+							.append(" left join frame_tree t2 on t3.tree_id=t2.tree_id ")
+							.append(" where substr(t1.upload_time,0,8) >= '").append(startDate).append("' ")
+							.append(" and substr(t1.upload_time,0,8) <= '").append(endDate).append("' and ")
+							.append(" t2.path like '").append(((TreeForm)item).getPath()).append("%' ")
+							.append(dimensionSql)
+							.append(" group by substr(t1.upload_time,0,8) "); 
+					}else{
+						sb.append("select 'C_").append(((TreeForm)item).getTreeId()).append("_'||substr(t1.upload_time,0,8) a,count(*) b from frame_upload t1")
+							.append(" left join frame_tree t2 on t1.tree2_id=t2.tree_id ") 
+							.append(" where substr(t1.upload_time,0,8) >= '").append(startDate).append("' ")
+							.append(" and substr(t1.upload_time,0,8) <= '").append(endDate).append("' and ")
+							.append(" t2.path like '").append(((TreeForm)item).getPath()).append("%' ")
+							.append(dimensionSql)
+							.append(" group by substr(t1.upload_time,0,8) "); 
+					}
 					c++;
 				}else{
 					u++;
